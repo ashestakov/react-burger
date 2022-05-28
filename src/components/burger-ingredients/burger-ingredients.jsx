@@ -8,7 +8,7 @@ const TABS = [
   {type: 'main', name: 'Начинки'}
 ]
 
-export default function BurgerIngredients({ingredients}) {
+export default function BurgerIngredients({ingredients, onIngredientInfo}) {
   const [current, setCurrent] = React.useState('one')
 
   const lists = TABS.map(({type, name}) => {
@@ -43,8 +43,9 @@ export default function BurgerIngredients({ingredients}) {
                 </h2>
                 <ul className={"pl-4 pr-4 pb-10 " + styles.ingredientList}>
                   {
-                    ingredients.map(({image, price, name, _id}) => {
-                        return <li className={styles.ingredient} key={_id}>
+                    ingredients.map((ingredient) => {
+                        const {image, price, name, _id} = ingredient;
+                        return <li className={styles.ingredient} key={_id} onClick={() => onIngredientInfo(ingredient)}>
                           <div className={styles.counterContainer}>
                             <Counter count={1} size="default"/>
                           </div>

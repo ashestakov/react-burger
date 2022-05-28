@@ -1,11 +1,15 @@
 import styles from './burger-constructor.module.css'
 import {ConstructorElement, CurrencyIcon, Button, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 
-export default function BurgerConstructor({ingredients, order}) {
+export default function BurgerConstructor({ingredients, onPlaceOrder}) {
   const burger = ingredients.slice(2, 8);
   const top = ingredients[0];
   const bottom = ingredients[0];
   const total = 610;
+
+  const onClickOrder = () => {
+    onPlaceOrder({id: '034536'});
+  }
 
   return <section className="pl-4 pr-4 mt-25">
     <ul className={styles.ingredientStack + " mb-10"}>
@@ -36,7 +40,7 @@ export default function BurgerConstructor({ingredients, order}) {
             <span className={"text text_type_digits-medium mr-10"}>
                 {total} <CurrencyIcon type={"primary"}/>
             </span>
-      <Button type="primary" size="large">
+      <Button type="primary" size="large" onClick={onClickOrder}>
         Оформить заказ
       </Button>
     </div>

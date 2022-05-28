@@ -1,0 +1,18 @@
+.ingredientDetails {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.stats {
+    display: flex;
+    gap: calc(var(--offset-base-size) * 5);
+}
+
+.stat {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: calc(var(--offset-base-size) * 2);
+    color: #8585AD;
+}
