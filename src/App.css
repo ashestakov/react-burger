@@ -36,3 +36,28 @@
     transform: rotate(360deg);
   }
 }
+
+#page-constructor header {
+  display: grid;
+  grid-template-columns: 1fr 1240px 1fr;
+  background: #1C1C21;
+  height: 88px;
+}
+
+#page-constructor header > nav {
+  grid-column: 2;
+  margin: 0 -20px;
+}
+
+#page-constructor main {
+  display: grid;
+  grid-template-columns: 1fr 600px 40px 600px 1fr;
+}
+
+#page-constructor section:first-child {
+  grid-column: 2;
+}
+
+#page-constructor section:last-child {
+  grid-column: 4;
+}

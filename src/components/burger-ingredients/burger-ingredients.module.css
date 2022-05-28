@@ -1,0 +1,52 @@
+.price {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: calc(var(--offset-base-size) * 2);
+}
+
+.name {
+    text-align: center;
+    min-height: calc(var(--offset-base-size) * 12);
+}
+
+.ingredients {
+    width: 600px;
+}
+
+.ingredientsScrollContainer {
+    height: 664px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.ingredientsScrollContainer::-webkit-scrollbar {
+    width: 8px;
+    background: #2F2F37;
+}
+
+.ingredientsScrollContainer::-webkit-scrollbar-thumb {
+    width: 8px;
+    background: #8585AD;
+}
+
+.ingredientsScrollContainer::-webkit-scrollbar-corner {
+    opacity: 0;
+}
+
+.ingredientList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: calc(var(--offset-base-size) * 8) calc(var(--offset-base-size) * 6)
+}
+
+.ingredient {
+    width: 272px;
+    position: relative;
+}
+
+.counterContainer {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
