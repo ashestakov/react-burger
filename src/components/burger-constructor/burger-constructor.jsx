@@ -5,7 +5,7 @@ export default function BurgerConstructor({ingredients, onPlaceOrder}) {
   const burger = ingredients.slice(2, 8);
   const top = ingredients[0];
   const bottom = ingredients[0];
-  const total = 610;
+  const total = [top, ...burger, bottom].reduce((acc, cur) => acc + cur.price, 0);
 
   const onClickOrder = () => {
     onPlaceOrder({id: '034536'});
