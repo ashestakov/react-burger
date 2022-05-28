@@ -44,12 +44,12 @@ function BurgerIngredients({ingredients, onIngredientInfo}) {
                 </h2>
                 <ul className={"pl-4 pr-4 pb-10 " + styles.ingredientList}>
                   {
-                    ingredients.map((ingredient) => {
+                    ingredients.map((ingredient, index) => {
                         const {image, price, name, _id} = ingredient;
                         return <li className={styles.ingredient} key={_id} onClick={() => onIngredientInfo(ingredient)}>
-                          <div className={styles.counterContainer}>
+                          {index === 0 && (<div className={styles.counterContainer}>
                             <Counter count={1} size="default"/>
-                          </div>
+                          </div>)}
                           <img className={"ml-4 mr-4"} src={image} alt={name}/>
                           <p className={"text text_type_digits-default mt-1 mb-1 " + styles.price}>
                             {price}
