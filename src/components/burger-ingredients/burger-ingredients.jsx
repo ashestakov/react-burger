@@ -1,7 +1,6 @@
 import {Tab, CurrencyIcon, Counter} from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger-ingredients.module.css'
 import React from "react";
-import data from '../../utils/data'
 
 const TABS = [
   {type: 'bun', name: 'Булки'},
@@ -9,14 +8,14 @@ const TABS = [
   {type: 'main', name: 'Начинки'}
 ]
 
-export default function BurgerIngredients() {
+export default function BurgerIngredients({ingredients}) {
   const [current, setCurrent] = React.useState('one')
 
   const lists = TABS.map(({type, name}) => {
     return {
       type,
       name,
-      ingredients: data.filter((i) => i.type === type)
+      ingredients: ingredients.filter((i) => i.type === type)
     }
   })
 
@@ -26,8 +25,8 @@ export default function BurgerIngredients() {
     </h1>
     <div style={{display: 'flex'}} className={"mb-10"}>
       {
-        TABS.map(({value, name}) => {
-          return <Tab key={value} value={value} active={current === value} onClick={setCurrent}>
+        TABS.map(({type, name}) => {
+          return <Tab key={type} value={type} active={current === type} onClick={setCurrent}>
             {name}
           </Tab>
         })
@@ -36,16 +35,16 @@ export default function BurgerIngredients() {
     <div className={styles.ingredientsScrollContainer}>
       <ul className={styles.ingredients}>
         {
-          lists.map(({name, ingredients}) => {
+          lists.map(({name, type, ingredients}) => {
             return (
-              <li>
+              <li key={type}>
                 <h2 className={"text_type_main-medium"}>
                   {name}
                 </h2>
                 <ul className={"pl-4 pr-4 pb-10 " + styles.ingredientList}>
                   {
-                    ingredients.map(({image, price, name}) => {
-                        return <li className={styles.ingredient}>
+                    ingredients.map(({image, price, name, _id}) => {
+                        return <li className={styles.ingredient} key={_id}>
                           <div className={styles.counterContainer}>
                             <Counter count={1} size="default"/>
                           </div>

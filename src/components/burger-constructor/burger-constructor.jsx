@@ -1,11 +1,10 @@
 import styles from './burger-constructor.module.css'
 import {ConstructorElement, CurrencyIcon, Button, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components'
-import data from '../../utils/data'
 
-export default function BurgerConstructor() {
-  const burger = data.slice(2, 8);
-  const top = data[0];
-  const bottom = data[0];
+export default function BurgerConstructor({ingredients, order}) {
+  const burger = ingredients.slice(2, 8);
+  const top = ingredients[0];
+  const bottom = ingredients[0];
   const total = 610;
 
   return <section className="pl-4 pr-4 mt-25">
@@ -17,9 +16,9 @@ export default function BurgerConstructor() {
       {
         <div className={styles.fillingsScrollContainer}>
           {
-            burger.map(({name, price, image_mobile}) => {
+            burger.map(({name, price, image_mobile}, index) => {
               return (
-                <li className={"pl-8"}>
+                <li className={"pl-8"} key={index}>
                   <DragIcon type={"primary"}/>
                   <ConstructorElement text={name} price={price} thumbnail={image_mobile} isLocked={false}/>
                 </li>
