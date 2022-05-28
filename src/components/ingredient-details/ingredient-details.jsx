@@ -1,5 +1,6 @@
 import Modal from "../modal/modal";
 import styles from "./ingredient-details.module.css";
+import PropTypes from "prop-types";
 
 const STATS = [
   {title: 'Калории,  ккал', propertyName: 'calories'},
@@ -8,7 +9,7 @@ const STATS = [
   {title: 'Углеводы,  г', propertyName: 'carbohydrates'},
 ]
 
-export default function IngredientDetails({ingredient, onClose}) {
+function IngredientDetails({ingredient, onClose}) {
   return (
     <Modal title={"Детали ингредиента"} onClose={onClose}>
       <div className={"pt-4 pl-4 pr-4"}>
@@ -31,3 +32,10 @@ export default function IngredientDetails({ingredient, onClose}) {
     </Modal>
   )
 }
+
+IngredientDetails.propTypes = {
+  ingredient: PropTypes.shape({name: PropTypes.string, image_large: PropTypes.string, proteins: PropTypes.number, fat: PropTypes.number, carbohydrates: PropTypes.number, calories: PropTypes.number}).isRequired,
+  onClose: PropTypes.func.isRequired
+}
+
+export default IngredientDetails;

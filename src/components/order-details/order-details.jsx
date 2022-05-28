@@ -1,7 +1,8 @@
 import Modal from "../modal/modal";
 import styles from "./order-details.module.css";
+import PropTypes from "prop-types";
 
-export default function OrderDetails({order, onClose}) {
+function OrderDetails({order, onClose}) {
   return (
     <Modal title={""} onClose={onClose}>
       <div className={styles.orderDetails + " pt-4 pl-4 pr-4"}>
@@ -19,3 +20,10 @@ export default function OrderDetails({order, onClose}) {
     </Modal>
   )
 }
+
+OrderDetails.propTypes = {
+  order: PropTypes.shape({id: PropTypes.number}).isRequired,
+  onClose: PropTypes.func.isRequired
+}
+
+export default OrderDetails;

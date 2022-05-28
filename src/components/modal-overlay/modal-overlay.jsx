@@ -1,8 +1,15 @@
 import styles from './modal-overlay.module.css'
+import PropTypes from "prop-types";
 
-export default function ModalOverlay({onClick}) {
+function ModalOverlay({onClick}) {
   return (
     <div className={styles.modalOverlay} onClick={onClick}>
     </div>
   )
 }
+
+ModalOverlay.propTypes = {
+  onClick: PropTypes.func.isRequired
+}
+
+export default ModalOverlay;

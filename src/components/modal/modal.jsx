@@ -3,10 +3,11 @@ import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import ReactDOM from "react-dom";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import React from "react";
+import PropTypes from "prop-types";
 
 const modalRoot = document.getElementById("react-modals");
 
-export default function Modal({children, title, onClose}) {
+function Modal({children, title, onClose}) {
   const onKeyDown = React.useCallback((e) => {
     if (e.key === 'Escape') {
       onClose();
@@ -38,3 +39,11 @@ export default function Modal({children, title, onClose}) {
     modalRoot
   )
 }
+
+Modal.propTypes = {
+  children: PropTypes.arrayOf(PropTypes.element).isRequired,
+  title: PropTypes.string.isRequired,
+  onClose: PropTypes.func.isRequired
+}
+
+export default Modal;

@@ -1,6 +1,7 @@
 import {Tab, CurrencyIcon, Counter} from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger-ingredients.module.css'
 import React from "react";
+import PropTypes from "prop-types";
 
 const TABS = [
   {type: 'bun', name: 'Булки'},
@@ -8,7 +9,7 @@ const TABS = [
   {type: 'main', name: 'Начинки'}
 ]
 
-export default function BurgerIngredients({ingredients, onIngredientInfo}) {
+function BurgerIngredients({ingredients, onIngredientInfo}) {
   const [current, setCurrent] = React.useState('one')
 
   const lists = TABS.map(({type, name}) => {
@@ -70,3 +71,18 @@ export default function BurgerIngredients({ingredients, onIngredientInfo}) {
     </div>
   </section>)
 }
+
+BurgerIngredients.propTypes = {
+  ingredients: PropTypes.arrayOf(
+    PropTypes.shape(
+      {
+        name: PropTypes.string,
+        price: PropTypes.number,
+        type: PropTypes.string
+      }
+    )
+  ).isRequired,
+  onIngredientInfo: PropTypes.func.isRequired
+}
+
+export default BurgerIngredients;

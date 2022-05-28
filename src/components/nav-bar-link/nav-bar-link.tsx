@@ -1,7 +1,8 @@
 import styles from "../app-header/app-header.module.css";
 import {ReactNode} from "react";
+import PropTypes from "prop-types";
 
-export default function NavBarLink({children, active}: { children: ReactNode[]; active?: Boolean }) {
+function NavBarLink({children, active}: { children: ReactNode[]; active?: Boolean }) {
     const classes = [
         styles.navLink,
         active ? styles.active : null,
@@ -14,3 +15,10 @@ export default function NavBarLink({children, active}: { children: ReactNode[]; 
         </a>
     )
 }
+
+NavBarLink.propTypes = {
+    children: PropTypes.node.isRequired,
+    active: PropTypes.bool
+}
+
+export default NavBarLink;
