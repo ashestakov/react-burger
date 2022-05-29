@@ -22,7 +22,7 @@ function OrderDetails({order, onClose}) {
 }
 
 OrderDetails.propTypes = {
-  order: PropTypes.shape({id: PropTypes.number}).isRequired,
+  order: PropTypes.shape({id: PropTypes.string}).isRequired,
   onClose: PropTypes.func.isRequired
 }
 
