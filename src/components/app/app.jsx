@@ -1,10 +1,10 @@
 import React from 'react';
-import './App.css';
-import AppHeader from "./components/app-header/app-header";
-import BurgerIngredients from './components/burger-ingredients/burger-ingredients';
-import BurgerConstructor from "./components/burger-constructor/burger-constructor";
-import OrderDetails from "./components/order-details/order-details";
-import IngredientDetails from './components/ingredient-details/ingredient-details';
+import './app.css';
+import AppHeader from "../app-header/app-header";
+import BurgerIngredients from '../burger-ingredients/burger-ingredients';
+import BurgerConstructor from "../burger-constructor/burger-constructor";
+import OrderDetails from "../order-details/order-details";
+import IngredientDetails from '../ingredient-details/ingredient-details';
 
 const DOMAIN = 'https://norma.nomoreparties.space';
 const MODAL_ORDER_DETAILS = 'OrderDetails';
