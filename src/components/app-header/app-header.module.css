@@ -1,3 +1,15 @@
+.header {
+    display: grid;
+    grid-template-columns: 1fr 1240px 1fr;
+    background: #1C1C21;
+    height: 88px;
+}
+
+.header > nav {
+    grid-column: 2;
+    margin: 0 -20px;
+}
+
 .navLink {
     display: flex;
     flex-direction: row;

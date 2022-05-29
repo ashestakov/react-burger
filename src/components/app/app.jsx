@@ -54,9 +54,7 @@ function App() {
       {((modal === MODAL_INGREDIENT_DETAILS) &&
         <IngredientDetails ingredient={modalIngredient} onClose={onModalClose}/>)}
       <div class={styles.pageConstructor}>
-        <header>
-          <AppHeader/>
-        </header>
+        <AppHeader/>
         <main>
           {
             ingredients.length > 0 && (
