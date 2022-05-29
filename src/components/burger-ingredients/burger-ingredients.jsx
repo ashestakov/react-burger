@@ -2,6 +2,7 @@ import {Tab, CurrencyIcon, Counter} from '@ya.praktikum/react-developer-burger-u
 import styles from './burger-ingredients.module.css'
 import React from "react";
 import PropTypes from "prop-types";
+import {ingredientType} from '../../utils/types'
 
 const TABS = [
   {type: 'bun', name: 'Булки'},
@@ -77,15 +78,7 @@ function BurgerIngredients({ingredients, onIngredientInfo}) {
 }
 
 BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(
-    PropTypes.shape(
-      {
-        name: PropTypes.string,
-        price: PropTypes.number,
-        type: PropTypes.string
-      }
-    )
-  ).isRequired,
+  ingredients: PropTypes.arrayOf(ingredientType).isRequired,
   onIngredientInfo: PropTypes.func.isRequired
 }
 

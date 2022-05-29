@@ -1,6 +1,7 @@
 import styles from './burger-constructor.module.css'
 import {ConstructorElement, CurrencyIcon, Button, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from "prop-types";
+import {ingredientType} from "../../utils/types";
 
 function BurgerConstructor({ingredients, onPlaceOrder}) {
   const burger = ingredients.slice(2, 8);
@@ -51,13 +52,7 @@ function BurgerConstructor({ingredients, onPlaceOrder}) {
 }
 
 BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string,
-      price: PropTypes.number,
-      image_mobile: PropTypes.string
-    })
-  ).isRequired,
+  ingredients: PropTypes.arrayOf(ingredientType).isRequired,
   onPlaceOrder: PropTypes.func.isRequired
 }
 

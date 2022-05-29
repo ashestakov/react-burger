@@ -1,6 +1,7 @@
 import Modal from "../modal/modal";
 import styles from "./ingredient-details.module.css";
 import PropTypes from "prop-types";
+import {ingredientWithNutritionFactsType} from "../../utils/types";
 
 const STATS = [
   {title: 'Калории,  ккал', propertyName: 'calories'},
@@ -34,7 +35,7 @@ function IngredientDetails({ingredient, onClose}) {
 }
 
 IngredientDetails.propTypes = {
-  ingredient: PropTypes.shape({name: PropTypes.string, image_large: PropTypes.string, proteins: PropTypes.number, fat: PropTypes.number, carbohydrates: PropTypes.number, calories: PropTypes.number}).isRequired,
+  ingredient: ingredientWithNutritionFactsType.isRequired,
   onClose: PropTypes.func.isRequired
 }
 
