@@ -6,7 +6,7 @@ export default function AppHeader() {
     return (
         <header className={styles.header}>
             <nav className={styles.navBar}>
-                <div style={{width: '50%', justifyContent: 'start'}} className={styles.navBarMenu}>
+                <div className={styles.leftHalf}>
                     <NavBarLink active={true}>
                         <BurgerIcon type="primary"/>
                         Конструктор
@@ -17,7 +17,7 @@ export default function AppHeader() {
                     </NavBarLink>
                 </div>
                 <Logo/>
-                <div style={{width: '50%', justifyContent: 'end'}} className={styles.navBarMenu}>
+                <div className={styles.rightHalf}>
                     <NavBarLink>
                         <ProfileIcon type="primary"/>
                         Личный кабинет

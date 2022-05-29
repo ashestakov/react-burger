@@ -24,7 +24,7 @@ function BurgerIngredients({ingredients, onIngredientInfo}) {
     <h1 className={"text text_type_main-large mb-5"}>
       Соберите бургер
     </h1>
-    <div style={{display: 'flex'}} className={"mb-10"}>
+    <div className={styles.tabContainer + " mb-10"}>
       {
         TABS.map(({type, name}) => {
           return (

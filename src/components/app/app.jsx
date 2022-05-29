@@ -53,7 +53,7 @@ function App() {
       {((modal === MODAL_ORDER_DETAILS) && <OrderDetails order={placedOrder} onClose={onModalClose}/>)}
       {((modal === MODAL_INGREDIENT_DETAILS) &&
         <IngredientDetails ingredient={modalIngredient} onClose={onModalClose}/>)}
-      <div class={styles.pageConstructor}>
+      <div className={styles.pageConstructor}>
         <AppHeader/>
         <main>
           {
