@@ -1,5 +1,5 @@
 import React from 'react';
-import './app.css';
+import styles from './app.module.css';
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from "../burger-constructor/burger-constructor";
@@ -44,7 +44,7 @@ function App() {
       {((modal === MODAL_ORDER_DETAILS) && <OrderDetails order={placedOrder} onClose={onModalClose}/>)}
       {((modal === MODAL_INGREDIENT_DETAILS) &&
         <IngredientDetails ingredient={modalIngredient} onClose={onModalClose}/>)}
-      <div id="page-constructor">
+      <div class={styles.pageConstructor}>
         <header>
           <AppHeader/>
         </header>
