@@ -27,9 +27,11 @@ function BurgerIngredients({ingredients, onIngredientInfo}) {
     <div style={{display: 'flex'}} className={"mb-10"}>
       {
         TABS.map(({type, name}) => {
-          return <Tab key={type} value={type} active={current === type} onClick={setCurrent}>
-            {name}
-          </Tab>
+          return (
+            <Tab key={type} value={type} active={current === type} onClick={setCurrent}>
+              {name}
+            </Tab>
+          )
         })
       }
     </div>
@@ -46,19 +48,21 @@ function BurgerIngredients({ingredients, onIngredientInfo}) {
                   {
                     ingredients.map((ingredient, index) => {
                         const {image, price, name, _id} = ingredient;
-                        return <li className={styles.ingredient} key={_id} onClick={() => onIngredientInfo(ingredient)}>
-                          {index === 0 && (<div className={styles.counterContainer}>
-                            <Counter count={1} size="default"/>
-                          </div>)}
-                          <img className={"ml-4 mr-4"} src={image} alt={name}/>
-                          <p className={"text text_type_digits-default mt-1 mb-1 " + styles.price}>
-                            {price}
-                            <CurrencyIcon type="primary"/>
-                          </p>
-                          <p className={"text_type_main-default " + styles.name}>
-                            {name}
-                          </p>
-                        </li>
+                        return (
+                          <li className={styles.ingredient} key={_id} onClick={() => onIngredientInfo(ingredient)}>
+                            {index === 0 && (<div className={styles.counterContainer}>
+                              <Counter count={1} size="default"/>
+                            </div>)}
+                            <img className={"ml-4 mr-4"} src={image} alt={name}/>
+                            <p className={"text text_type_digits-default mt-1 mb-1 " + styles.price}>
+                              {price}
+                              <CurrencyIcon type="primary"/>
+                            </p>
+                            <p className={"text_type_main-default " + styles.name}>
+                              {name}
+                            </p>
+                          </li>
+                        )
                       }
                     )
                   }
