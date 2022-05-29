@@ -10,6 +10,13 @@ const DOMAIN = 'https://norma.nomoreparties.space';
 const MODAL_ORDER_DETAILS = 'OrderDetails';
 const MODAL_INGREDIENT_DETAILS = 'IngredientDetails';
 
+const checkResponse = (response) => {
+  if (!response.ok) {
+    throw new Error(`${response.status}: ${response.statusText}`);
+  }
+  return response;
+}
+
 function App() {
   const [ingredients, setIngredients] = React.useState([]);
   const [modalIngredient, setModalIngredient] = React.useState();
@@ -18,7 +25,9 @@ function App() {
 
   React.useEffect(() => {
     fetch(`${DOMAIN}/api/ingredients`)
-      .then(response => response.json())
+      .then(response => {
+        return checkResponse(response).json()
+      })
       .then(data => {
         setIngredients(data.data);
       })
