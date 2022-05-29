@@ -10,11 +10,11 @@ const DOMAIN = 'https://norma.nomoreparties.space';
 const MODAL_ORDER_DETAILS = 'OrderDetails';
 const MODAL_INGREDIENT_DETAILS = 'IngredientDetails';
 
-const checkResponse = (response) => {
-  if (!response.ok) {
-    throw new Error(`${response.status}: ${response.statusText}`);
+const checkResponse = res => {
+  if (res.ok) {
+    return res.json();
   }
-  return response;
+  return Promise.reject(`Ошибка ${res.status}`);
 }
 
 function App() {
@@ -25,9 +25,7 @@ function App() {
 
   React.useEffect(() => {
     fetch(`${DOMAIN}/api/ingredients`)
-      .then(response => {
-        return checkResponse(response).json()
-      })
+      .then(checkResponse)
       .then(data => {
         setIngredients(data.data);
       })
