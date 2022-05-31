@@ -1,0 +1,57 @@
+.header {
+    display: grid;
+    grid-template-columns: 1fr 1240px 1fr;
+    background: #1C1C21;
+    height: 88px;
+}
+
+.header > nav {
+    grid-column: 2;
+    margin: 0 -20px;
+}
+
+.navLink {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: #8585AD;
+    text-decoration: none;
+    gap: calc(var(--offset-base-size) * 2);
+    justify-content: space-between;
+    border-radius: 40px;
+    white-space: nowrap;
+}
+
+.navLink svg {
+    fill: #8585AD;
+}
+
+.navLink.active {
+    color: #F2F2F3;
+}
+
+.navLink.active svg {
+    fill: #F2F2F3;
+}
+
+.navBar {
+    display: flex;
+    align-items: center;
+}
+
+.navBarMenu {
+    display: flex;
+    gap: calc(var(--offset-base-size) * 2);
+}
+
+.leftHalf {
+    width: 50%;
+    justify-content: start;
+    composes: navBarMenu;
+}
+
+.rightHalf {
+    width: 50%;
+    justify-content: end;
+    composes: navBarMenu;
+}

@@ -1,0 +1,31 @@
+.ingredientStack {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--offset-base-size) * 4);
+}
+
+.ingredientStack li {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.ingredientStack li > svg {
+    position: absolute;
+    left: 0;
+}
+
+.fillingsScrollContainer {
+    margin-right: -16px;
+    max-height: 464px;
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--offset-base-size) * 4);
+    composes: scrollContainer from '../../common-styles/scroll-container.css';
+}
+
+.total {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
