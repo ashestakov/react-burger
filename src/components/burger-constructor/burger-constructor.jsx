@@ -2,8 +2,11 @@ import styles from './burger-constructor.module.css'
 import {ConstructorElement, CurrencyIcon, Button, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from "prop-types";
 import {ingredientType} from "../../utils/types";
+import {IngredientsContext} from "../../services/ingredientsContext";
+import {useContext} from "react";
 
-function BurgerConstructor({ingredients, onPlaceOrder}) {
+function BurgerConstructor({onPlaceOrder}) {
+  const ingredients = useContext(IngredientsContext);
   const burger = ingredients.slice(2, 8);
   const top = ingredients[0];
   const bottom = ingredients[0];
@@ -52,7 +55,6 @@ function BurgerConstructor({ingredients, onPlaceOrder}) {
 }
 
 BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientType).isRequired,
   onPlaceOrder: PropTypes.func.isRequired
 }
 

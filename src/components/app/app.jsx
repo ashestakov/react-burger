@@ -5,6 +5,7 @@ import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import OrderDetails from "../order-details/order-details";
 import IngredientDetails from '../ingredient-details/ingredient-details';
+import {IngredientsContext} from "../../services/ingredientsContext";
 
 const DOMAIN = 'https://norma.nomoreparties.space';
 const MODAL_ORDER_DETAILS = 'OrderDetails';
@@ -57,8 +58,10 @@ function App() {
           {
             ingredients.length > 0 && (
               <>
-                <BurgerIngredients ingredients={ingredients} onIngredientInfo={onIngredientInfo}/>
-                <BurgerConstructor ingredients={ingredients} onPlaceOrder={onPlaceOrder}/>
+                <IngredientsContext.Provider value={ingredients}>
+                  <BurgerIngredients onIngredientInfo={onIngredientInfo}/>
+                  <BurgerConstructor onPlaceOrder={onPlaceOrder}/>
+                </IngredientsContext.Provider>
               </>
             )
           }
