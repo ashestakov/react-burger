@@ -2,7 +2,6 @@ import {Tab, CurrencyIcon, Counter} from '@ya.praktikum/react-developer-burger-u
 import styles from './burger-ingredients.module.css'
 import React, {useContext} from "react";
 import PropTypes from "prop-types";
-import {ingredientType} from '../../utils/types'
 import {IngredientsContext} from "../../services/ingredientsContext";
 
 const TABS = [
@@ -11,9 +10,14 @@ const TABS = [
   {type: 'main', name: 'Начинки'}
 ]
 
-function BurgerIngredients({onIngredientInfo}) {
+function BurgerIngredients({onIngredientInfo, onClickIngredient}) {
   const ingredients = useContext(IngredientsContext);
   const [current, setCurrent] = React.useState('one')
+
+  const onClick = React.useCallback((ingredient) => {
+    onClickIngredient(ingredient);
+    onIngredientInfo(ingredient);
+  }, []);
 
   const lists = TABS.map(({type, name}) => {
     return {
@@ -52,7 +56,7 @@ function BurgerIngredients({onIngredientInfo}) {
                     ingredients.map((ingredient, index) => {
                         const {image, price, name, _id} = ingredient;
                         return (
-                          <li className={styles.ingredient} key={_id} onClick={() => onIngredientInfo(ingredient)}>
+                          <li className={styles.ingredient} key={_id} onClick={() => onClick(ingredient) }>
                             {index === 0 && (<div className={styles.counterContainer}>
                               <Counter count={1} size="default"/>
                             </div>)}

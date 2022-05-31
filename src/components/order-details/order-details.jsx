@@ -6,7 +6,7 @@ function OrderDetails({order, onClose}) {
   return (
     <Modal title={""} onClose={onClose}>
       <div className={styles.orderDetails + " pt-4 pl-4 pr-4"}>
-        <p className={styles.glow + " text text_type_digits-large mb-8"}>{order.id}</p>
+        <p className={styles.glow + " text text_type_digits-large mb-8"}>{order.number}</p>
         <p className={"mb-15 text text_type_main-medium"}>идентификатор заказа</p>
         <div className={styles.done + " mb-15"}>
         </div>
@@ -22,7 +22,7 @@ function OrderDetails({order, onClose}) {
 }
 
 OrderDetails.propTypes = {
-  order: PropTypes.shape({id: PropTypes.string}).isRequired,
+  order: PropTypes.shape({number: PropTypes.number}).isRequired,
   onClose: PropTypes.func.isRequired
 }
 
