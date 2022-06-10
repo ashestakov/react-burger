@@ -20,7 +20,7 @@ export default function order(state = ORDER_INITIAL_STATE, action) {
 
     case ORDER_INGREDIENT_REMOVE:
       return {
-        bun: state.order.bun,
+        bun: state.bun,
         mainsAndSauces: state.mainsAndSauces.filter((ingredient, index) => index !== action.payload)
       }
     case ORDER_RESET:
