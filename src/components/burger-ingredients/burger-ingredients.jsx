@@ -1,6 +1,6 @@
-import {Tab, CurrencyIcon, Counter} from '@ya.praktikum/react-developer-burger-ui-components'
+import {Counter, CurrencyIcon, Tab} from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger-ingredients.module.css'
-import React from "react";
+import React, {useRef} from "react";
 import PropTypes from "prop-types";
 import {useSelector} from "react-redux";
 
@@ -19,13 +19,31 @@ function BurgerIngredients({onIngredientInfo, onClickIngredient}) {
     onIngredientInfo(ingredient);
   }, []);
 
-  const lists = TABS.map(({type, name}) => {
+  const refs = [useRef(), useRef(), useRef()];
+
+  const lists = TABS.map(({type, name}, index) => {
     return {
       type,
       name,
-      ingredients: ingredients.filter((i) => i.type === type)
+      ingredients: ingredients.filter((i) => i.type === type),
+      ref: refs[index]
     }
   })
+
+  const onScroll = (e) => {
+    const nearestTabIndex = [0, 1, 2].map((index) => {
+      return {
+        index,
+        distance: Math.abs(
+          e.target.getBoundingClientRect().top -
+          refs[index].current.getBoundingClientRect().top
+        )
+      };
+    }).reduce((prev, current) => {
+      return prev.distance < current.distance ? prev : current;
+    }).index;
+    setCurrent(TABS[nearestTabIndex].type)
+  }
 
   return (<section className="pt-10">
     <h1 className={"text text_type_main-large mb-5"}>
@@ -42,13 +60,13 @@ function BurgerIngredients({onIngredientInfo, onClickIngredient}) {
         })
       }
     </div>
-    <div className={styles.ingredientsScrollContainer}>
+    <div className={styles.ingredientsScrollContainer} onScroll={onScroll}>
       <ul className={styles.ingredients}>
         {
-          lists.map(({name, type, ingredients}) => {
+          lists.map(({name, type, ingredients, ref}) => {
             return (
               <li key={type}>
-                <h2 className={"text_type_main-medium"}>
+                <h2 className={"text_type_main-medium"} ref={ref}>
                   {name}
                 </h2>
                 <ul className={"pl-4 pr-4 pb-10 " + styles.ingredientList}>
@@ -56,7 +74,7 @@ function BurgerIngredients({onIngredientInfo, onClickIngredient}) {
                     ingredients.map((ingredient, index) => {
                         const {image, price, name, _id} = ingredient;
                         return (
-                          <li className={styles.ingredient} key={_id} onClick={() => onClick(ingredient) }>
+                          <li className={styles.ingredient} key={_id} onClick={() => onClick(ingredient)}>
                             {index === 0 && (<div className={styles.counterContainer}>
                               <Counter count={1} size="default"/>
                             </div>)}
