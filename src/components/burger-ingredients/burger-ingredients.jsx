@@ -12,7 +12,16 @@ const TABS = [
 
 function BurgerIngredients({onIngredientInfo, onClickIngredient}) {
   const ingredients = useSelector(store => store.ingredients);
-  const [current, setCurrent] = React.useState('one')
+  const [current, setCurrent] = React.useState('bun');
+  const order = useSelector(store => store.order);
+
+  const ingredientCounts = React.useMemo(() => {
+    const counts = {};
+    [order.bun, order.bun, ...order.mainsAndSauces].forEach(ingredient => {
+      counts[ingredient._id] = (counts[ingredient._id] || 0) + 1;
+    });
+    return counts;
+  }, [order]);
 
   const onClick = React.useCallback((ingredient) => {
     onClickIngredient(ingredient);
@@ -75,8 +84,8 @@ function BurgerIngredients({onIngredientInfo, onClickIngredient}) {
                         const {image, price, name, _id} = ingredient;
                         return (
                           <li className={styles.ingredient} key={_id} onClick={() => onClick(ingredient)}>
-                            {index === 0 && (<div className={styles.counterContainer}>
-                              <Counter count={1} size="default"/>
+                            {ingredientCounts[_id] && (<div className={styles.counterContainer}>
+                              <Counter count={ingredientCounts[_id]} size="default"/>
                             </div>)}
                             <img className={"ml-4 mr-4"} src={image} alt={name}/>
                             <p className={"text text_type_digits-default mt-1 mb-1 " + styles.price}>
