@@ -1,8 +1,8 @@
 import {Tab, CurrencyIcon, Counter} from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger-ingredients.module.css'
-import React, {useContext} from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import {IngredientsContext} from "../../services/ingredientsContext";
+import {useSelector} from "react-redux";
 
 const TABS = [
   {type: 'bun', name: 'Булки'},
@@ -11,7 +11,7 @@ const TABS = [
 ]
 
 function BurgerIngredients({onIngredientInfo, onClickIngredient}) {
-  const ingredients = useContext(IngredientsContext);
+  const ingredients = useSelector(store => store.ingredients);
   const [current, setCurrent] = React.useState('one')
 
   const onClick = React.useCallback((ingredient) => {

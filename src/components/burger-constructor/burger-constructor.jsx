@@ -1,11 +1,10 @@
 import styles from './burger-constructor.module.css'
 import {ConstructorElement, CurrencyIcon, Button, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from "prop-types";
-import {useContext} from "react";
-import {OrderContext} from "../../services/orderContext";
+import {useSelector} from "react-redux";
 
 function BurgerConstructor({onPlaceOrder, onRemoveIngredient}) {
-  const order = useContext(OrderContext);
+  const order = useSelector(store => store.order);
   const total = [order.bun, ...order.mainsAndSauces, order.bun].filter(item => item)
     .reduce((acc, cur) => acc + cur.price, 0);
 

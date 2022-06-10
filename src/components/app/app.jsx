@@ -1,12 +1,14 @@
-import React from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import styles from './app.module.css';
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import OrderDetails from "../order-details/order-details";
 import IngredientDetails from '../ingredient-details/ingredient-details';
-import {IngredientsContext} from "../../services/ingredientsContext";
-import {OrderContext} from "../../services/orderContext";
+import {ADD_INGREDIENT, REMOVE_INGREDIENT, RESET} from "../../services/actions/order";
+import {SET_INGREDIENTS} from "../../services/actions/ingredients";
+import {SET_MODAL_INGREDIENT, UNSET_MODAL_INGREDIENT} from "../../services/actions/modalIngredient";
 
 const DOMAIN = 'https://norma.nomoreparties.space';
 const MODAL_ORDER_DETAILS = 'OrderDetails';
@@ -19,61 +21,48 @@ const checkResponse = res => {
   return Promise.reject(`Ошибка ${res.status}`);
 }
 
-const ORDER_INITIAL_STATE = {bun: null, mainsAndSauces: []};
-
-const orderReducer = (order, action) => {
-  const ingredient = action.payload;
-  switch (action.type) {
-    case 'ADD_INGREDIENT':
-      if (ingredient.type === 'bun') {
-        return {
-          bun: ingredient,
-          mainsAndSauces: order.mainsAndSauces
-        }
-      } else {
-        return {
-          bun: order.bun,
-          mainsAndSauces: [...order.mainsAndSauces, ingredient]
-        }
-      }
-    case 'REMOVE_INGREDIENT':
-      return {
-        bun: order.bun,
-        mainsAndSauces: order.mainsAndSauces.filter((ingredient, index) => index !== action.payload)
-      }
-    case 'RESET':
-      return ORDER_INITIAL_STATE;
-    default:
-      return order;
-  }
-}
-
 function App() {
-  const [ingredients, setIngredients] = React.useState([]);
-  const [modalIngredient, setModalIngredient] = React.useState();
-  const [modalOrder, setModalOrder] = React.useState();
-  const [modal, setModal] = React.useState();
-  const [order, orderDispatcher] = React.useReducer(orderReducer, ORDER_INITIAL_STATE);
+  const ingredients = useSelector(store => store.ingredients);
+  const modalIngredient = useSelector(store => store.modalIngredient);
+  const modalOrder = useSelector(store => store.modalOrder);
+  const [modal, setModal] = useState();
+  const dispatch = useDispatch();
 
-  const addIngredient = React.useCallback((ingredient) => {
-    orderDispatcher({type: 'ADD_INGREDIENT', payload: ingredient});
+  const addIngredient = useCallback((ingredient) => {
+    dispatch({type: ADD_INGREDIENT, payload: ingredient});
   }, []);
 
-  const removeIngredient = React.useCallback((index) => {
-    orderDispatcher({type: 'REMOVE_INGREDIENT', payload: index});
+  const removeIngredient = useCallback((index) => {
+    dispatch({type: REMOVE_INGREDIENT, payload: index});
   }, []);
 
-  React.useEffect(() => {
+  const setIngredients = useCallback((ingredients) => {
+    dispatch({type: SET_INGREDIENTS, payload: ingredients});
+  }, []);
+
+  const setModalIngredient = useCallback((ingredient) => {
+    dispatch({type: SET_MODAL_INGREDIENT, payload: ingredient});
+  }, []);
+
+  const unsetModalIngredient = useCallback((ingredient) => {
+    dispatch({type: UNSET_MODAL_INGREDIENT});
+  }, []);
+
+  const setModalOrder = useCallback((order) => {
+    dispatch({type: 'SET_MODAL_ORDER', payload: order});
+  }, []);
+
+  useEffect(() => {
     fetch(`${DOMAIN}/api/ingredients`)
       .then(checkResponse)
       .then(data => {
         setIngredients(data.data);
-        orderDispatcher({type: 'ADD_INGREDIENT', payload: data.data[0]});
+        dispatch({type: ADD_INGREDIENT, payload: data.data[0]});
       })
       .catch(error => console.error(error));
-  }, [setIngredients]);
+  }, [setIngredients, dispatch]);
 
-  const onPlaceOrder = React.useCallback((order) => {
+  const onPlaceOrder = useCallback((order) => {
     fetch(`${DOMAIN}/api/orders`, {
         method: 'POST',
         body: JSON.stringify({
@@ -91,18 +80,19 @@ function App() {
       .then(data => {
         setModalOrder(data.order);
         setModal(MODAL_ORDER_DETAILS);
-        orderDispatcher('RESET');
+        dispatch({type: RESET});
       })
       .catch(error => console.error(error));
   }, []);
 
-  const onIngredientInfo = React.useCallback((ingredient) => {
+  const onIngredientInfo = useCallback((ingredient) => {
     setModalIngredient(ingredient);
     setModal(MODAL_INGREDIENT_DETAILS);
   }, []);
 
-  const onModalClose = React.useCallback(() => {
+  const onModalClose = useCallback(() => {
     setModal(undefined);
+    unsetModalIngredient();
   }, []);
 
   return (
@@ -116,12 +106,8 @@ function App() {
           {
             ingredients.length > 0 && (
               <>
-                <OrderContext.Provider value={order}>
-                  <IngredientsContext.Provider value={ingredients}>
-                    <BurgerIngredients onIngredientInfo={onIngredientInfo} onClickIngredient={addIngredient}/>
-                    <BurgerConstructor onPlaceOrder={onPlaceOrder} onRemoveIngredient={removeIngredient}/>
-                  </IngredientsContext.Provider>
-                </OrderContext.Provider>
+                <BurgerIngredients onIngredientInfo={onIngredientInfo} onClickIngredient={addIngredient}/>
+                <BurgerConstructor onPlaceOrder={onPlaceOrder} onRemoveIngredient={removeIngredient}/>
               </>
             )
           }
