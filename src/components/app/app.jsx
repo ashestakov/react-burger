@@ -6,100 +6,58 @@ import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import OrderDetails from "../order-details/order-details";
 import IngredientDetails from '../ingredient-details/ingredient-details';
-import {ADD_INGREDIENT, REMOVE_INGREDIENT, RESET} from "../../services/actions/order";
-import {SET_INGREDIENTS} from "../../services/actions/ingredients";
-import {SET_MODAL_INGREDIENT, UNSET_MODAL_INGREDIENT} from "../../services/actions/modalIngredient";
-
-const DOMAIN = 'https://norma.nomoreparties.space';
-const MODAL_ORDER_DETAILS = 'OrderDetails';
-const MODAL_INGREDIENT_DETAILS = 'IngredientDetails';
-
-const checkResponse = res => {
-  if (res.ok) {
-    return res.json();
-  }
-  return Promise.reject(`Ошибка ${res.status}`);
-}
+import {ORDER_INGREDIENT_ADD, ORDER_INGREDIENT_REMOVE} from "../../services/actions/order";
+import {MODAL_INGREDIENT_SET, MODAL_INGREDIENT_RESET} from "../../services/actions/modalIngredient";
+import {getIngredients, placeOrder} from "../../services/actions";
+import {PLACED_ORDER_RESET} from "../../services/actions/placedOrder";
 
 function App() {
   const ingredients = useSelector(store => store.ingredients);
   const modalIngredient = useSelector(store => store.modalIngredient);
-  const modalOrder = useSelector(store => store.modalOrder);
-  const [modal, setModal] = useState();
+  const placedOrder = useSelector(store => store.placedOrder);
   const dispatch = useDispatch();
 
   const addIngredient = useCallback((ingredient) => {
-    dispatch({type: ADD_INGREDIENT, payload: ingredient});
+    dispatch({type: ORDER_INGREDIENT_ADD, ingredient});
   }, []);
 
   const removeIngredient = useCallback((index) => {
-    dispatch({type: REMOVE_INGREDIENT, payload: index});
-  }, []);
-
-  const setIngredients = useCallback((ingredients) => {
-    dispatch({type: SET_INGREDIENTS, payload: ingredients});
+    dispatch({type: ORDER_INGREDIENT_REMOVE, payload: index});
   }, []);
 
   const setModalIngredient = useCallback((ingredient) => {
-    dispatch({type: SET_MODAL_INGREDIENT, payload: ingredient});
+    dispatch({type: MODAL_INGREDIENT_SET, payload: ingredient});
   }, []);
 
-  const unsetModalIngredient = useCallback((ingredient) => {
-    dispatch({type: UNSET_MODAL_INGREDIENT});
+  const resetModalIngredient = useCallback(() => {
+    dispatch({type: MODAL_INGREDIENT_RESET});
   }, []);
 
-  const setModalOrder = useCallback((order) => {
-    dispatch({type: 'SET_MODAL_ORDER', payload: order});
+  const resetPlacedOrder = useCallback(() => {
+    dispatch({type: PLACED_ORDER_RESET});
   }, []);
 
   useEffect(() => {
-    fetch(`${DOMAIN}/api/ingredients`)
-      .then(checkResponse)
-      .then(data => {
-        setIngredients(data.data);
-        dispatch({type: ADD_INGREDIENT, payload: data.data[0]});
-      })
-      .catch(error => console.error(error));
-  }, [setIngredients, dispatch]);
+    dispatch(getIngredients());
+  }, []);
 
   const onPlaceOrder = useCallback((order) => {
-    fetch(`${DOMAIN}/api/orders`, {
-        method: 'POST',
-        body: JSON.stringify({
-          ingredients: [
-            order.bun,
-            ...order.mainsAndSauces,
-            order.bun
-          ].map(ingredient => ingredient._id)
-        }),
-        headers: {
-          'content-type': 'application/json'
-        }
-      }
-    ).then(checkResponse)
-      .then(data => {
-        setModalOrder(data.order);
-        setModal(MODAL_ORDER_DETAILS);
-        dispatch({type: RESET});
-      })
-      .catch(error => console.error(error));
+    dispatch(placeOrder(order));
   }, []);
 
   const onIngredientInfo = useCallback((ingredient) => {
     setModalIngredient(ingredient);
-    setModal(MODAL_INGREDIENT_DETAILS);
   }, []);
 
   const onModalClose = useCallback(() => {
-    setModal(undefined);
-    unsetModalIngredient();
+    resetPlacedOrder();
+    resetModalIngredient();
   }, []);
 
   return (
     <>
-      {((modal === MODAL_ORDER_DETAILS) && <OrderDetails order={modalOrder} onClose={onModalClose}/>)}
-      {((modal === MODAL_INGREDIENT_DETAILS) &&
-        <IngredientDetails ingredient={modalIngredient} onClose={onModalClose}/>)}
+      {(placedOrder && <OrderDetails order={placedOrder} onClose={onModalClose}/>)}
+      {(modalIngredient && <IngredientDetails ingredient={modalIngredient} onClose={onModalClose}/>)}
       <div className={styles.pageConstructor}>
         <AppHeader/>
         <main>

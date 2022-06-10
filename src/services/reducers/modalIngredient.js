@@ -1,12 +1,12 @@
-import {SET_MODAL_INGREDIENT, UNSET_MODAL_INGREDIENT} from "../actions/modalIngredient";
+import {MODAL_INGREDIENT_SET, MODAL_INGREDIENT_RESET} from "../actions/modalIngredient";
 
-const INITIAL_STATE = {};
+const INITIAL_STATE = null;
 
 export default function modalIngredient(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case SET_MODAL_INGREDIENT:
+    case MODAL_INGREDIENT_SET:
       return action.payload;
-    case UNSET_MODAL_INGREDIENT:
+    case MODAL_INGREDIENT_RESET:
       return INITIAL_STATE;
     default:
       return state;
