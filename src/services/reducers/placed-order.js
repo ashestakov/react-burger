@@ -1,13 +1,31 @@
 import {PLACED_ORDER_SUCCESS, PLACED_ORDER_RESET, PLACED_ORDER_ERROR} from "../actions/placed-order";
 
-export default function placedOrder(state = null, action) {
+const INITIAL_STATE = {
+  order: null,
+  makingRequest: false,
+  requestFailed: false
+}
+
+export default function placedOrder(state = INITIAL_STATE, action) {
   switch (action.type) {
     case PLACED_ORDER_SUCCESS:
-      return action.order;
+      return {
+        ...state,
+        order: action.order,
+        makingRequest: false
+      };
     case PLACED_ORDER_ERROR:
-      return null;
+      return {
+        ...state,
+        order: null,
+        makingRequest: false,
+        requestFailed: true
+      };
     case PLACED_ORDER_RESET:
-      return null;
+      return {
+        ...state,
+        order: null
+      };
     default:
       return state;
   }

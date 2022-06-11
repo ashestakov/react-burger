@@ -7,17 +7,23 @@ export default function order(state = ORDER_INITIAL_STATE, action) {
     case ORDER_INGREDIENT_ADD:
       if (action.ingredient.type === 'bun') {
         return {
-          bun: action.ingredient, mainsAndSauces: state.mainsAndSauces
+          ...state,
+          bun: action.ingredient,
+          mainsAndSauces: state.mainsAndSauces
         }
       } else {
         return {
-          bun: state.bun, mainsAndSauces: [...state.mainsAndSauces, action.ingredient]
+          ...state,
+          bun: state.bun,
+          mainsAndSauces: [...state.mainsAndSauces, action.ingredient]
         }
       }
 
     case ORDER_INGREDIENT_REMOVE:
       return {
-        bun: state.bun, mainsAndSauces: state.mainsAndSauces.filter((ingredient, index) => index !== action.index)
+        ...state,
+        bun: state.bun,
+        mainsAndSauces: state.mainsAndSauces.filter((ingredient, index) => index !== action.index)
       }
     case ORDER_RESET:
       return ORDER_INITIAL_STATE;
@@ -29,6 +35,7 @@ export default function order(state = ORDER_INITIAL_STATE, action) {
       const targetIngredientIndexDelta = isMovingFromTop ? 1 : 0;
 
       return {
+        ...state,
         bun: state.bun,
         mainsAndSauces: [
           ...mainsAndSaucesWithoutIngredient.slice(0, action.newIndex + targetIngredientIndexDelta),

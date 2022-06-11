@@ -14,9 +14,9 @@ import {HTML5Backend} from "react-dnd-html5-backend";
 import {DndProvider} from "react-dnd";
 
 function App() {
-  const ingredients = useSelector(store => store.ingredients);
+  const ingredients = useSelector(store => store.ingredients.ingredients);
   const modalIngredient = useSelector(store => store.modalIngredient);
-  const placedOrder = useSelector(store => store.placedOrder);
+  const placedOrder = useSelector(store => store.placedOrder.order);
   const dispatch = useDispatch();
 
   const addIngredient = useCallback((id) => {

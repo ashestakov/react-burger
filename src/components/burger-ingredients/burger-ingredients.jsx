@@ -12,7 +12,7 @@ const TABS = [
 ]
 
 function BurgerIngredients({onIngredientInfo}) {
-  const ingredients = useSelector(store => store.ingredients);
+  const ingredients = useSelector(store => store.ingredients.ingredients);
   const [current, setCurrent] = React.useState('bun');
   const order = useSelector(store => store.order);
 
