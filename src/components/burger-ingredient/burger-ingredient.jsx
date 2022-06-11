@@ -8,12 +8,9 @@ import {ingredientType} from "../../utils/types";
 function BurgerIngredient({ingredient, count, onClick}) {
   const {_id, image, name, price} = ingredient;
 
-  const [{isDragging}, dragRef] = useDrag({
+  const [, dragRef] = useDrag({
     type: 'ingredient',
-    item: {id: _id},
-    collect: monitor => ({
-      isDragging: monitor.isDragging()
-    })
+    item: {id: _id}
   })
 
   return (

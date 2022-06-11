@@ -7,9 +7,9 @@ import BurgerConstructor from "../burger-constructor/burger-constructor";
 import OrderDetails from "../order-details/order-details";
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import {ORDER_INGREDIENT_ADD, ORDER_INGREDIENT_REMOVE} from "../../services/actions/order";
-import {MODAL_INGREDIENT_SET, MODAL_INGREDIENT_RESET} from "../../services/actions/modalIngredient";
+import {MODAL_INGREDIENT_SET, MODAL_INGREDIENT_RESET} from "../../services/actions/modal-ingredient";
 import {getIngredients, placeOrder} from "../../services/actions";
-import {PLACED_ORDER_RESET} from "../../services/actions/placedOrder";
+import {PLACED_ORDER_RESET} from "../../services/actions/placed-order";
 import {HTML5Backend} from "react-dnd-html5-backend";
 import {DndProvider} from "react-dnd";
 

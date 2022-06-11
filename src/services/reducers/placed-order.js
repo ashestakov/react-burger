@@ -1,4 +1,4 @@
-import {PLACED_ORDER_SUCCESS, PLACED_ORDER_RESET} from "../actions/placedOrder";
+import {PLACED_ORDER_SUCCESS, PLACED_ORDER_RESET} from "../actions/placed-order";
 
 export default function placedOrder(state = null, action) {
   switch (action.type) {

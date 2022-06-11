@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import {useDrop} from "react-dnd";
 import {useCallback} from "react";
 import {useSelector} from "react-redux";
+import DraggableConstructorElement from "../draggable-constructor-element/draggable-constructor-element";
 
 function BurgerConstructor({onPlaceOrder, onAddIngredient, onRemoveIngredient}) {
   const order = useSelector(store => store.order);
@@ -18,7 +19,7 @@ function BurgerConstructor({onPlaceOrder, onAddIngredient, onRemoveIngredient}) 
     onAddIngredient(id);
   }, [])
 
-  const [, dropTarget] = useDrop({
+  const [, dropTargetRef] = useDrop({
     accept: "ingredient",
     drop(id) {
       onDropHandler(id);
@@ -27,7 +28,7 @@ function BurgerConstructor({onPlaceOrder, onAddIngredient, onRemoveIngredient}) 
 
   return (
     <section className="pl-4 pr-4 mt-25">
-      <ul ref={dropTarget} className={styles.ingredientStack + " mb-10"}>
+      <ul ref={dropTargetRef} className={styles.ingredientStack + " mb-10"}>
         {order.bun && (
           <li className={"pl-8"}>
             <ConstructorElement type="top" text={order.bun.name + " (верх)"} price={order.bun.price}
@@ -39,14 +40,11 @@ function BurgerConstructor({onPlaceOrder, onAddIngredient, onRemoveIngredient}) 
         {
           <div className={styles.fillingsScrollContainer}>
             {
-              order.mainsAndSauces.map(({name, price, image_mobile}, index) => {
+              order.mainsAndSauces.map(({_id, name, price, image_mobile}, index) => {
                 return (
-                  <li className={"pl-8"} key={index}>
-                    <DragIcon type={"primary"}/>
-                    <ConstructorElement text={name} price={price} thumbnail={image_mobile} isLocked={false}
-                                        handleClose={() => onRemoveIngredient(index)}
-                    />
-                  </li>
+                  <DraggableConstructorElement key={index} id={_id} index={index} name={name} price={price} thumbnail={image_mobile}
+                                               handleClose={() => onRemoveIngredient(index)}
+                  />
                 )
               })
             }

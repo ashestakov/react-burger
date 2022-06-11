@@ -1,0 +1,19 @@
+.container {
+    position: relative;
+}
+
+.insert {
+    position: absolute;
+    bottom: calc((var(--offset-base-size) * -4) - 1px);
+    left: calc(var(--offset-base-size) * 17);
+    border: none;
+    border-top: 2px solid #4c4cff57;
+    border-bottom: none;
+    width: calc(var(--offset-base-size) * 115);
+    opacity: 0;
+}
+
+.insertVisible {
+    opacity: 1;
+    transition: opacity 0.1s ease-in-out;
+}

@@ -1,6 +1,6 @@
 import {ORDER_INGREDIENT_ADD, ORDER_RESET} from "./order";
 import {INGREDIENTS_ERROR, INGREDIENTS_REQUEST, INGREDIENTS_SUCCESS} from "./ingredients";
-import {PLACED_ORDER_REQUEST, PLACED_ORDER_SUCCESS, PLACED_ORDER_ERROR} from "./placedOrder";
+import {PLACED_ORDER_REQUEST, PLACED_ORDER_SUCCESS, PLACED_ORDER_ERROR} from "./placed-order";
 
 const DOMAIN = 'https://norma.nomoreparties.space';
 
