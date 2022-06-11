@@ -3,7 +3,6 @@ import {useDrag, useDrop} from "react-dnd";
 import {useCallback} from "react";
 import {useDispatch} from "react-redux";
 import {ORDER_MOVE_INGREDIENT} from "../../services/actions/order";
-import styles from "./draggable-constructor-element.module.css";
 import PropTypes from "prop-types";
 
 function DraggableConstructorElement({id, index, name, price, thumbnail, handleClose}) {
@@ -18,22 +17,18 @@ function DraggableConstructorElement({id, index, name, price, thumbnail, handleC
   const dispatch = useDispatch();
 
   const onDropHandler = useCallback((ingredient) => {
-    dispatch({type: ORDER_MOVE_INGREDIENT, oldIndex: ingredient.index, newIndex: index + 1});
+    dispatch({type: ORDER_MOVE_INGREDIENT, oldIndex: ingredient.index, newIndex: index});
   }, [index]);
 
-  const [{isHover}, dropTargetRef] = useDrop({
+  const [, dropTargetRef] = useDrop({
     accept: "constructor-element",
-    collect: monitor => ({
-      isHover: monitor.isOver()
-    }),
     drop(id) {
       onDropHandler(id);
     },
   });
 
   return (
-    <div ref={dropTargetRef} className={styles.container}>
-      <hr className={styles.insert + ' ' + (isHover ? styles.insertVisible : '')}/>
+    <div ref={dropTargetRef}>
       <li className={"pl-8"} ref={dragRef} style={{opacity: opacity}}>
         <DragIcon type={"primary"}/>
         <ConstructorElement text={name} price={price} thumbnail={thumbnail} isLocked={false}

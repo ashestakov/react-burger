@@ -24,12 +24,16 @@ export default function order(state = ORDER_INITIAL_STATE, action) {
     case ORDER_MOVE_INGREDIENT:
       const ingredientAtIndex = state.mainsAndSauces[action.oldIndex];
       const mainsAndSaucesWithoutIngredient = state.mainsAndSauces.filter((ingredient, index) => index !== action.oldIndex);
+
+      const isMovingFromTop = action.newIndex > action.oldIndex;
+      const targetIngredientIndexDelta = isMovingFromTop ? 1 : 0;
+
       return {
         bun: state.bun,
         mainsAndSauces: [
-          ...mainsAndSaucesWithoutIngredient.slice(0, action.newIndex),
+          ...mainsAndSaucesWithoutIngredient.slice(0, action.newIndex + targetIngredientIndexDelta),
           ingredientAtIndex,
-          ...mainsAndSaucesWithoutIngredient.slice(action.newIndex)
+          ...mainsAndSaucesWithoutIngredient.slice(action.newIndex + targetIngredientIndexDelta)
         ]
       }
     default:
