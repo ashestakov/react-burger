@@ -10,6 +10,8 @@ import {ORDER_INGREDIENT_ADD, ORDER_INGREDIENT_REMOVE} from "../../services/acti
 import {MODAL_INGREDIENT_SET, MODAL_INGREDIENT_RESET} from "../../services/actions/modalIngredient";
 import {getIngredients, placeOrder} from "../../services/actions";
 import {PLACED_ORDER_RESET} from "../../services/actions/placedOrder";
+import {HTML5Backend} from "react-dnd-html5-backend";
+import {DndProvider} from "react-dnd";
 
 function App() {
   const ingredients = useSelector(store => store.ingredients);
@@ -17,16 +19,16 @@ function App() {
   const placedOrder = useSelector(store => store.placedOrder);
   const dispatch = useDispatch();
 
-  const addIngredient = useCallback((ingredient) => {
-    dispatch({type: ORDER_INGREDIENT_ADD, ingredient});
-  }, []);
+  const addIngredient = useCallback((id) => {
+    dispatch({type: ORDER_INGREDIENT_ADD, ingredient: ingredients.find(i => i._id === id)});
+  }, [ingredients]);
 
   const removeIngredient = useCallback((index) => {
-    dispatch({type: ORDER_INGREDIENT_REMOVE, payload: index});
+    dispatch({type: ORDER_INGREDIENT_REMOVE, index});
   }, []);
 
   const setModalIngredient = useCallback((ingredient) => {
-    dispatch({type: MODAL_INGREDIENT_SET, payload: ingredient});
+    dispatch({type: MODAL_INGREDIENT_SET, ingredient});
   }, []);
 
   const resetModalIngredient = useCallback(() => {
@@ -64,8 +66,10 @@ function App() {
           {
             ingredients.length > 0 && (
               <>
-                <BurgerIngredients onIngredientInfo={onIngredientInfo} onClickIngredient={addIngredient}/>
-                <BurgerConstructor onPlaceOrder={onPlaceOrder} onRemoveIngredient={removeIngredient}/>
+              <DndProvider backend={HTML5Backend}>
+                <BurgerIngredients onIngredientInfo={onIngredientInfo} />
+                <BurgerConstructor onPlaceOrder={onPlaceOrder} onAddIngredient={addIngredient} onRemoveIngredient={removeIngredient}/>
+              </DndProvider>
               </>
             )
           }

@@ -1,9 +1,11 @@
 import styles from './burger-constructor.module.css'
 import {ConstructorElement, CurrencyIcon, Button, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from "prop-types";
+import {useDrop} from "react-dnd";
+import {useCallback} from "react";
 import {useSelector} from "react-redux";
 
-function BurgerConstructor({onPlaceOrder, onRemoveIngredient}) {
+function BurgerConstructor({onPlaceOrder, onAddIngredient, onRemoveIngredient}) {
   const order = useSelector(store => store.order);
   const total = [order.bun, ...order.mainsAndSauces, order.bun].filter(item => item)
     .reduce((acc, cur) => acc + cur.price, 0);
@@ -12,9 +14,20 @@ function BurgerConstructor({onPlaceOrder, onRemoveIngredient}) {
     onPlaceOrder(order);
   }
 
+  const onDropHandler = useCallback(({id}) => {
+    onAddIngredient(id);
+  }, [])
+
+  const [, dropTarget] = useDrop({
+    accept: "ingredient",
+    drop(id) {
+      onDropHandler(id);
+    },
+  });
+
   return (
     <section className="pl-4 pr-4 mt-25">
-      <ul className={styles.ingredientStack + " mb-10"}>
+      <ul ref={dropTarget} className={styles.ingredientStack + " mb-10"}>
         {order.bun && (
           <li className={"pl-8"}>
             <ConstructorElement type="top" text={order.bun.name + " (верх)"} price={order.bun.price}

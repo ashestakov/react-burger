@@ -5,7 +5,7 @@ const INITIAL_STATE = null;
 export default function modalIngredient(state = INITIAL_STATE, action) {
   switch (action.type) {
     case MODAL_INGREDIENT_SET:
-      return action.payload;
+      return action.ingredient;
     case MODAL_INGREDIENT_RESET:
       return INITIAL_STATE;
     default:
