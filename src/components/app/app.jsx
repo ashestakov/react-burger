@@ -1,4 +1,5 @@
-import React, {useState, useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import styles from './app.module.css';
 import AppHeader from "../app-header/app-header";
@@ -12,6 +13,8 @@ import {getIngredients, placeOrder} from "../../services/actions";
 import {PLACED_ORDER_RESET} from "../../services/actions/placed-order";
 import {HTML5Backend} from "react-dnd-html5-backend";
 import {DndProvider} from "react-dnd";
+import {ForgotPasswordPage, IngredientPage, LoginPage, ProfilePage, RegistrationPage} from "../pages";
+import {ResetPasswordPage} from "../pages/reset-password-page";
 
 function App() {
   const ingredients = useSelector(store => store.ingredients.ingredients);
@@ -57,25 +60,36 @@ function App() {
   }, []);
 
   return (
-    <>
-      {(placedOrder && <OrderDetails order={placedOrder} onClose={onModalClose}/>)}
-      {(modalIngredient && <IngredientDetails ingredient={modalIngredient} onClose={onModalClose}/>)}
-      <div className={styles.pageConstructor}>
-        <AppHeader/>
-        <main>
-          {
-            ingredients.length > 0 && (
-              <>
-              <DndProvider backend={HTML5Backend}>
-                <BurgerIngredients onIngredientInfo={onIngredientInfo} />
-                <BurgerConstructor onPlaceOrder={onPlaceOrder} onAddIngredient={addIngredient} onRemoveIngredient={removeIngredient}/>
-              </DndProvider>
-              </>
-            )
-          }
-        </main>
-      </div>
-    </>
+    <Router>
+      <AppHeader/>
+      <Switch>
+        <Route path="/" exact={true}>
+          {(placedOrder && <OrderDetails order={placedOrder} onClose={onModalClose}/>)}
+          {(modalIngredient && <IngredientDetails ingredient={modalIngredient} onClose={onModalClose}/>)}
+          <div className={styles.pageConstructor}>
+            <main>
+              {
+                ingredients.length > 0 && (
+                  <>
+                    <DndProvider backend={HTML5Backend}>
+                      <BurgerIngredients onIngredientInfo={onIngredientInfo}/>
+                      <BurgerConstructor onPlaceOrder={onPlaceOrder} onAddIngredient={addIngredient}
+                                         onRemoveIngredient={removeIngredient}/>
+                    </DndProvider>
+                  </>
+                )
+              }
+            </main>
+          </div>
+        </Route>
+        <Route path={'/login'} component={LoginPage}/>
+        <Route path={'/register'} component={RegistrationPage}/>
+        <Route path={'/forgot-password'} component={ForgotPasswordPage}/>
+        <Route path={'/reset-password'} component={ResetPasswordPage}/>
+        <Route path={'/profile'} component={ProfilePage}/>
+        <Route path={'/ingredients/:id'} component={IngredientPage}/>
+      </Switch>
+    </Router>
   );
 }
 
