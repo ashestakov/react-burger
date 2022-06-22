@@ -1,0 +1,13 @@
+.profileLink {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 30px;
+    letter-spacing: 0;
+    text-align: left;
+    color: #8585AD;
+    text-decoration: none;
+}
+
+.profileLink.active{
+    color: #F2F2F3;
+}

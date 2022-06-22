@@ -7,18 +7,18 @@ export default function AppHeader() {
         <header className={styles.header}>
             <nav className={styles.navBar}>
                 <div className={styles.leftHalf}>
-                    <NavBarLink active={true}>
+                    <NavBarLink to={'/'}>
                         <BurgerIcon type="primary"/>
                         Конструктор
                     </NavBarLink>
-                    <NavBarLink>
+                    <NavBarLink to={'#'}>
                         <ListIcon type="primary"/>
                         Лента заказов
                     </NavBarLink>
                 </div>
                 <Logo/>
                 <div className={styles.rightHalf}>
-                    <NavBarLink>
+                    <NavBarLink to={'/profile'}>
                         <ProfileIcon type="primary"/>
                         Личный кабинет
                     </NavBarLink>

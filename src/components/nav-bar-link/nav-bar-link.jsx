@@ -1,8 +1,11 @@
-import styles from "../app-header/app-header.module.css";
-import {ReactNode} from "react";
+import styles from './nav-bar-link.module.css'
 import PropTypes from "prop-types";
+import {Link, useLocation} from "react-router-dom";
 
-function NavBarLink({children, active}: { children: ReactNode[]; active?: Boolean }) {
+function NavBarLink({children, to}) {
+    const location = useLocation();
+    const active = location.pathname === to;
+
     const classes = [
         styles.navLink,
         active ? styles.active : null,
@@ -10,9 +13,9 @@ function NavBarLink({children, active}: { children: ReactNode[]; active?: Boolea
     ].join(' ')
 
     return (
-        <a className={classes} href="#">
+        <Link className={classes} to={to}>
             {children}
-        </a>
+        </Link>
     )
 }
 
