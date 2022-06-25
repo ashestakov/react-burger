@@ -9,12 +9,13 @@ import OrderDetails from "../order-details/order-details";
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import {ORDER_INGREDIENT_ADD, ORDER_INGREDIENT_REMOVE} from "../../services/actions/order";
 import {MODAL_INGREDIENT_SET, MODAL_INGREDIENT_RESET} from "../../services/actions/modal-ingredient";
-import {getIngredients, initializeAuth, loadSavedRefreshToken, loadUser, placeOrder} from "../../services/actions";
+import {getIngredients, initializeAuth, placeOrder} from "../../services/actions";
 import {PLACED_ORDER_RESET} from "../../services/actions/placed-order";
 import {HTML5Backend} from "react-dnd-html5-backend";
 import {DndProvider} from "react-dnd";
 import {ForgotPasswordPage, IngredientPage, LoginPage, ProfilePage, RegistrationPage} from "../pages";
 import {ResetPasswordPage} from "../pages/reset-password-page/reset-password-page";
+import {ProtectedRoute} from "../protected-route/protected-route";
 
 function App() {
   const ingredients = useSelector(store => store.ingredients.ingredients);
@@ -91,7 +92,7 @@ function App() {
           <Route path={'/register'} component={RegistrationPage}/>
           <Route path={'/forgot-password'} component={ForgotPasswordPage}/>
           <Route path={'/reset-password'} component={ResetPasswordPage}/>
-          <Route path={'/profile'} component={ProfilePage}/>
+          <ProtectedRoute path={'/profile'} component={ProfilePage}/>
           <Route path={'/ingredients/:id'} component={IngredientPage}/>
         </Switch>
       </div>

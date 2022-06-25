@@ -2,7 +2,7 @@ import styles from './profile-page.module.css'
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useCallback, useEffect, useMemo, useState} from "react";
 import ProfileAsideLink from "../../profile-aside-link/profile-aside-link";
-import {loadUser, logout, patchUser} from "../../../services/actions";
+import {logout, patchUser} from "../../../services/actions";
 import {useDispatch, useSelector} from "react-redux";
 
 export function ProfilePage() {
@@ -10,14 +10,9 @@ export function ProfilePage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
-  const accessToken = useSelector(store => store.auth.accessToken);
   const user = useSelector(store => store.auth.user);
-
-  useEffect(() => {
-    if (accessToken) {
-      dispatch(loadUser(accessToken));
-    }
-  }, [dispatch, accessToken]);
+  const accessToken = useSelector(store => store.auth.accessToken);
+  const refreshToken = useSelector(store => store.auth.refreshToken);
 
   useEffect(() => {
     if (user) {
@@ -40,8 +35,8 @@ export function ProfilePage() {
 
   const onClickLogout = useCallback((e) => {
     e.preventDefault();
-    logout();
-  }, []);
+    dispatch(logout(refreshToken));
+  }, [refreshToken]);
 
   const diff = useMemo(() => {
     if (!user) {

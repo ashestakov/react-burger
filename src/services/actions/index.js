@@ -193,7 +193,7 @@ export function loadUser(accessToken) {
   return dispatch => {
     dispatch({type: LOAD_USER_REQUEST});
 
-    fetch(`${DOMAIN}/api/auth/user`, {
+    return fetch(`${DOMAIN}/api/auth/user`, {
       headers: {
         'authorization': accessToken
       }

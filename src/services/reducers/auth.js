@@ -31,7 +31,7 @@ const INITIAL_STATE = {
   requestError: null,
   accessToken: null,
   refreshToken: null,
-  auth: null
+  user: null
 }
 
 export function auth(state = INITIAL_STATE, action) {
