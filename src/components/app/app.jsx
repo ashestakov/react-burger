@@ -16,6 +16,7 @@ import {DndProvider} from "react-dnd";
 import {ForgotPasswordPage, IngredientPage, LoginPage, ProfilePage, RegistrationPage} from "../pages";
 import {ResetPasswordPage} from "../pages/reset-password-page/reset-password-page";
 import {ProtectedRoute} from "../protected-route/protected-route";
+import {UnauthorizedUserRoute} from "../unauthorized-user-route/unauthorized-user-route";
 
 function App() {
   const ingredients = useSelector(store => store.ingredients.ingredients);
@@ -88,10 +89,10 @@ function App() {
               </main>
             </div>
           </Route>
-          <Route path={'/login'} component={LoginPage}/>
-          <Route path={'/register'} component={RegistrationPage}/>
-          <Route path={'/forgot-password'} component={ForgotPasswordPage}/>
-          <Route path={'/reset-password'} component={ResetPasswordPage}/>
+          <UnauthorizedUserRoute path={'/login'} component={LoginPage}/>
+          <UnauthorizedUserRoute path={'/register'} component={RegistrationPage}/>
+          <UnauthorizedUserRoute path={'/forgot-password'} component={ForgotPasswordPage}/>
+          <UnauthorizedUserRoute path={'/reset-password'} component={ResetPasswordPage}/>
           <ProtectedRoute path={'/profile'} component={ProfilePage}/>
           <Route path={'/ingredients/:id'} component={IngredientPage}/>
         </Switch>
