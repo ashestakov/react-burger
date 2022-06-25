@@ -28,6 +28,7 @@ import {
 
 const INITIAL_STATE = {
   requestInProgress: false,
+  passwordResetRequestSuccess: false,
   requestError: null,
   accessToken: null,
   refreshToken: null,
@@ -82,7 +83,8 @@ export function auth(state = INITIAL_STATE, action) {
     case INITIATE_PASSWORD_RESET_SUCCESS:
       return {
         ...state,
-        requestInProgress: false
+        requestInProgress: false,
+        passwordResetRequestSuccess: true
       }
     case INITIATE_PASSWORD_RESET_ERROR:
       return {

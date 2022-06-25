@@ -2,13 +2,16 @@ import styles from "../login-page/login-page.module.css";
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useCallback, useState} from "react";
 import {finalizePasswordReset} from "../../../services/actions";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {Redirect} from "react-router-dom";
 
 export function ResetPasswordPage() {
   const dispatch = useDispatch();
 
   const [password, setPassword] = useState('');
   const [token, setToken] = useState('');
+
+  const passwordResetRequestSuccess = useSelector(store => store.auth.passwordResetRequestSuccess);
 
   const onPasswordChange = useCallback((e) => {
     setPassword(e.target.value);
@@ -22,6 +25,10 @@ export function ResetPasswordPage() {
     e.preventDefault();
     dispatch(finalizePasswordReset(password, token));
   }, [dispatch, password, token]);
+
+  if (!passwordResetRequestSuccess) {
+    return (<Redirect to={'/'} />)
+  }
 
   return (
     <div className={styles.pageContainer}>
