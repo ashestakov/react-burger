@@ -3,7 +3,7 @@ import {Link, useLocation} from "react-router-dom";
 import {useCallback} from "react";
 import PropTypes from "prop-types";
 
-function ProfileAsideLink({text, to}) {
+function ProfileAsideLink({text, to, onClick}) {
   const location = useLocation();
 
   const isLinkWithPathActive = useCallback((path) => {
@@ -12,7 +12,7 @@ function ProfileAsideLink({text, to}) {
 
   return (
     <Link className={'text text_type_main-medium ' + styles.profileLink + ' ' + (isLinkWithPathActive(to) ? styles.active : '')}
-          to={to}>
+          to={to} onClick={onClick}>
       {text}
     </Link>
   )
@@ -20,7 +20,8 @@ function ProfileAsideLink({text, to}) {
 
 ProfileAsideLink.propTypes = {
   text: PropTypes.string.isRequired,
-  to: PropTypes.string.isRequired
+  to: PropTypes.string.isRequired,
+  onClick: PropTypes.func
 }
 
 export default ProfileAsideLink;
