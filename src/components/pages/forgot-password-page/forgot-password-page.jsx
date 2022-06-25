@@ -15,7 +15,7 @@ export function ForgotPasswordPage() {
     setEmail(e.target.value);
   }, []);
 
-  const onRestoreClick = useCallback((e) => {
+  const onRestore = useCallback((e) => {
     e.preventDefault();
     dispatch(initiatePasswordReset(email));
   }, [email]);
@@ -27,10 +27,10 @@ export function ForgotPasswordPage() {
   }
 
   return (<div className={styles.pageContainer}>
-    <form className={styles.form + " mb-20 inputs-480"}>
+    <form className={styles.form + " mb-20 inputs-480"} onSubmit={onRestore}>
       <p className={'text-center text text_type_main-medium'}>Восстановление пароля</p>
       <Input type={'email'} placeholder={'Укажите e-mail'} value={email} onChange={onEmailChange}/>
-      <Button type={'primary'} onClick={onRestoreClick}>Восстановить</Button>
+      <Button type={'primary'}>Восстановить</Button>
     </form>
     <p className={'mb-4 text text_type_main-default'}>
       Вспомнили пароль?

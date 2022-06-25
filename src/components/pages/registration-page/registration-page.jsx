@@ -21,7 +21,7 @@ export function RegistrationPage() {
     setName(e.target.value);
   }, []);
 
-  const onRegisterClick = useCallback((e) => {
+  const onRegister = useCallback((e) => {
     e.preventDefault();
     dispatch(register(name, email, password));
   }, [dispatch, name, email, password]);
@@ -31,12 +31,12 @@ export function RegistrationPage() {
   }, []);
 
   return (<div className={styles.pageContainer}>
-    <form className={styles.form + " mb-20 inputs-480"}>
+    <form className={styles.form + " mb-20 inputs-480"} onSubmit={onRegister}>
       <p className={'text-center text text_type_main-medium'}>Регистрация</p>
       <Input type={'text'} placeholder={'Имя'} value={name} onChange={onNameChange}/>
       <Input type={'email'} placeholder={'E-mail'} value={email} onChange={onEmailChange}/>
       <Input type={'password'} placeholder={'Пароль'} value={password} onChange={onPasswordChange} icon={'ShowIcon'}/>
-      <Button type={'primary'} onClick={onRegisterClick}>Зарегистрироваться</Button>
+      <Button type={'primary'}>Зарегистрироваться</Button>
     </form>
     <p className={'mb-4 text text_type_main-default'}>
       Уже зарегистрированы?

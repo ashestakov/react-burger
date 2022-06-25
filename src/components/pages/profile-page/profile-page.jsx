@@ -58,7 +58,7 @@ export function ProfilePage() {
     return result;
   }, [user, name, email, password]);
 
-  const onSaveClick = useCallback((e) => {
+  const onSave = useCallback((e) => {
     e.preventDefault();
     dispatch(patchUser(accessToken, diff));
   }, [dispatch, accessToken, diff]);
@@ -91,7 +91,7 @@ export function ProfilePage() {
     <main>
       <Switch>
         <Route path={"/profile"} exact={true}>
-          <form className={styles.form + ' inputs-600'}>
+          <form className={styles.form + ' inputs-600'} onSubmit={onSave}>
             <Input type={'text'} placeholder={'Имя'} value={name} onChange={onNameChange} icon={'EditIcon'}/>
             <Input type={'email'} placeholder={'E-mail'} value={email} onChange={onEmailChange} icon={'EditIcon'}/>
             <Input type={'password'} placeholder={'Пароль'} value={password} onChange={onPasswordChange}
@@ -100,7 +100,7 @@ export function ProfilePage() {
               (Object.keys(diff).length > 0) &&
               <div>
                 <Button type={'secondary'} onClick={onCancelClick}>Отмена</Button>
-                <Button type={'primary'} onClick={onSaveClick}>Сохранить</Button>
+                <Button type={'primary'}>Сохранить</Button>
               </div>
             }
           </form>
