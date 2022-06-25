@@ -1,12 +1,13 @@
 import {Button, Input} from '@ya.praktikum/react-developer-burger-ui-components'
 import {useCallback, useState} from "react";
 import styles from './login-page.module.css';
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import {login} from "../../../services/actions";
 import {useDispatch} from "react-redux";
 
 export function LoginPage() {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -21,8 +22,10 @@ export function LoginPage() {
 
   const onClickLogin = useCallback((e)=>{
     e.preventDefault();
-    dispatch(login(email, password));
-  }, [email, password]);
+    dispatch(login(email, password, () =>{
+      history.push('/')
+    }));
+  }, [dispatch, email, history, password]);
 
   return (<div className={styles.pageContainer}>
     <form className={styles.form + " mb-20 inputs-480"}>

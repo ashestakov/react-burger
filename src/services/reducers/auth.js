@@ -26,7 +26,15 @@ import {
   FINALIZE_PASSWORD_RESET_ERROR
 } from "../actions/auth";
 
-export function auth(state = {}, action) {
+const INITIAL_STATE = {
+  requestInProgress: false,
+  requestError: null,
+  accessToken: null,
+  refreshToken: null,
+  auth: null
+}
+
+export function auth(state = INITIAL_STATE, action) {
   switch (action.type) {
     case LOGIN_REQUEST:
       return {
@@ -176,6 +184,5 @@ export function auth(state = {}, action) {
       }
     default:
       return state;
-
   }
 }

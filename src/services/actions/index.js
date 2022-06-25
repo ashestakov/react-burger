@@ -75,7 +75,7 @@ export function placeOrder(order) {
   }
 }
 
-export function login(email, password) {
+export function login(email, password, callback) {
   return dispatch => {
     dispatch({type: LOGIN_REQUEST});
 
@@ -89,6 +89,9 @@ export function login(email, password) {
       .then(({accessToken, refreshToken, user}) => {
           saveRefreshToken(refreshToken);
           dispatch({type: LOGIN_SUCCESS, accessToken, refreshToken, user});
+          if (callback){
+            callback();
+          }
         }
       ).catch(error => dispatch({type: LOGIN_ERROR, error}));
   }
@@ -117,7 +120,7 @@ export function initiatePasswordReset(email) {
   return dispatch => {
     dispatch({type: INITIATE_PASSWORD_RESET_REQUEST});
 
-    fetch(`${DOMAIN}/api/auth/password-reset`, {
+    fetch(`${DOMAIN}/api/password-reset`, {
       method: 'POST',
       body: JSON.stringify({email}),
       headers: {
@@ -135,7 +138,7 @@ export function finalizePasswordReset(password, token) {
   return dispatch => {
     dispatch({type: FINALIZE_PASSWORD_RESET_REQUEST});
 
-    fetch(`${DOMAIN}/api/auth/password-reset/reset`, {
+    fetch(`${DOMAIN}/api/password-reset/reset`, {
       method: 'POST',
       body: JSON.stringify({password, token}),
       headers: {
