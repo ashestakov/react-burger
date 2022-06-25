@@ -4,7 +4,14 @@ import {useDispatch, useSelector} from "react-redux";
 import styles from './app.module.css';
 import AppHeader from "../app-header/app-header";
 import {getIngredients, initializeAuth} from "../../services/actions";
-import {BurgerIngredientsPage, ForgotPasswordPage, IngredientPage, LoginPage, ProfilePage, RegistrationPage} from "../pages";
+import {
+  BurgerIngredientsPage,
+  ForgotPasswordPage,
+  LoginPage,
+  NotFoundPage,
+  ProfilePage,
+  RegistrationPage
+} from "../pages";
 import {ResetPasswordPage} from "../pages/reset-password-page/reset-password-page";
 import {ProtectedRoute} from "../protected-route/protected-route";
 import {UnauthorizedUserRoute} from "../unauthorized-user-route/unauthorized-user-route";
@@ -29,12 +36,12 @@ function App() {
           <Route path={["/", "/ingredients/:id"]} exact={true}>
             <BurgerIngredientsPage ingredients={ingredients}/>
           </Route>
-          <UnauthorizedUserRoute path={'/login'} component={LoginPage}/>
-          <UnauthorizedUserRoute path={'/register'} component={RegistrationPage}/>
-          <UnauthorizedUserRoute path={'/forgot-password'} component={ForgotPasswordPage}/>
-          <UnauthorizedUserRoute path={'/reset-password'} component={ResetPasswordPage}/>
+          <UnauthorizedUserRoute path={'/login'} exact={true} component={LoginPage}/>
+          <UnauthorizedUserRoute path={'/register'} exact={true} component={RegistrationPage}/>
+          <UnauthorizedUserRoute path={'/forgot-password'} exact={true} component={ForgotPasswordPage}/>
+          <UnauthorizedUserRoute path={'/reset-password'} exact={true} component={ResetPasswordPage}/>
           <ProtectedRoute path={'/profile'} component={ProfilePage}/>
-          <Route path={'/ingredients/:id'} component={IngredientPage}/>
+          <Route path="*" component={NotFoundPage} />
         </Switch>
       </div>
     </Router>

@@ -4,6 +4,7 @@ import {useCallback, useEffect, useMemo, useState} from "react";
 import ProfileAsideLink from "../../profile-aside-link/profile-aside-link";
 import {logout, patchUser} from "../../../services/actions";
 import {useDispatch, useSelector} from "react-redux";
+import {Route, Switch} from 'react-router-dom';
 
 export function ProfilePage() {
   const [name, setName] = useState('');
@@ -88,18 +89,26 @@ export function ProfilePage() {
       </p>
     </aside>
     <main>
-      <form className={styles.form + ' inputs-600'}>
-        <Input type={'text'} placeholder={'Имя'} value={name} onChange={onNameChange} icon={'EditIcon'}/>
-        <Input type={'email'} placeholder={'E-mail'} value={email} onChange={onEmailChange} icon={'EditIcon'}/>
-        <Input type={'password'} placeholder={'Пароль'} value={password} onChange={onPasswordChange} icon={'EditIcon'}/>
-        {
-          (Object.keys(diff).length > 0) &&
-          <div>
-            <Button type={'secondary'} onClick={onCancelClick}>Отмена</Button>
-            <Button type={'primary'} onClick={onSaveClick}>Сохранить</Button>
-          </div>
-        }
-      </form>
+      <Switch>
+        <Route path={"/profile"} exact={true}>
+          <form className={styles.form + ' inputs-600'}>
+            <Input type={'text'} placeholder={'Имя'} value={name} onChange={onNameChange} icon={'EditIcon'}/>
+            <Input type={'email'} placeholder={'E-mail'} value={email} onChange={onEmailChange} icon={'EditIcon'}/>
+            <Input type={'password'} placeholder={'Пароль'} value={password} onChange={onPasswordChange}
+                   icon={'EditIcon'}/>
+            {
+              (Object.keys(diff).length > 0) &&
+              <div>
+                <Button type={'secondary'} onClick={onCancelClick}>Отмена</Button>
+                <Button type={'primary'} onClick={onSaveClick}>Сохранить</Button>
+              </div>
+            }
+          </form>
+        </Route>
+        <Route path={'/profile/orders'} exact={true}>
+
+        </Route>
+      </Switch>
     </main>
   </div>);
 }
