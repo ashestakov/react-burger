@@ -2,9 +2,9 @@ import styles from './nav-bar-link.module.css'
 import PropTypes from "prop-types";
 import {Link, useLocation} from "react-router-dom";
 
-function NavBarLink({children, to}) {
+function NavBarLink({children, to, exact}) {
     const location = useLocation();
-    const active = location.pathname === to;
+    const active = exact ? location.pathname === to : location.pathname.startsWith(to);
 
     const classes = [
         styles.navLink,
@@ -21,7 +21,8 @@ function NavBarLink({children, to}) {
 
 NavBarLink.propTypes = {
     children: PropTypes.node.isRequired,
-    active: PropTypes.bool
+    active: PropTypes.bool,
+    exact: PropTypes.bool
 }
 
 export default NavBarLink;
