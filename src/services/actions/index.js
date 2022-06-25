@@ -75,11 +75,11 @@ export function placeOrder(order) {
   }
 }
 
-export function login(email, password, callback) {
+export function login(email, password) {
   return dispatch => {
     dispatch({type: LOGIN_REQUEST});
 
-    fetch(`${DOMAIN}/api/auth/login`, {
+    return fetch(`${DOMAIN}/api/auth/login`, {
       method: 'POST',
       body: JSON.stringify({email, password}),
       headers: {
@@ -89,9 +89,6 @@ export function login(email, password, callback) {
       .then(({accessToken, refreshToken, user}) => {
           saveRefreshToken(refreshToken);
           dispatch({type: LOGIN_SUCCESS, accessToken, refreshToken, user});
-          if (callback){
-            callback();
-          }
         }
       ).catch(error => dispatch({type: LOGIN_ERROR, error}));
   }

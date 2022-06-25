@@ -22,9 +22,7 @@ export function ProtectedRoute({children, ...rest}) {
   }
 
   if (!auth.accessToken) {
-    return <Redirect
-      to='/login'
-    />
+    return <Redirect to={{pathname: '/login', state: {from: rest.path}}} />
   }
 
   return (

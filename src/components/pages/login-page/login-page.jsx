@@ -1,13 +1,14 @@
 import {Button, Input} from '@ya.praktikum/react-developer-burger-ui-components'
 import {useCallback, useState} from "react";
 import styles from './login-page.module.css';
-import {Link, useHistory} from "react-router-dom";
+import {Link, useHistory, useLocation} from "react-router-dom";
 import {login} from "../../../services/actions";
 import {useDispatch} from "react-redux";
 
 export function LoginPage() {
   const dispatch = useDispatch();
   const history = useHistory();
+  const {from} = useLocation().state;
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -20,11 +21,10 @@ export function LoginPage() {
     setPassword(e.target.value);
   }, []);
 
-  const onLogin = useCallback((e)=>{
+  const onLogin = useCallback(async (e) => {
     e.preventDefault();
-    dispatch(login(email, password, () =>{
-      history.push('/')
-    }));
+    await dispatch(login(email, password))
+    history.push(from || '/')
   }, [dispatch, email, history, password]);
 
   return (<div className={styles.pageContainer + ' mt-30'}>
