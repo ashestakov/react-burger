@@ -17,15 +17,14 @@ export function ProtectedRoute({children, ...rest}) {
     init();
   }, []);
 
+  if (!isUserLoaded) {
+    return null;
+  }
 
   if (!auth.accessToken) {
     return <Redirect
       to='/login'
     />
-  }
-
-  if (!isUserLoaded) {
-    return null;
   }
 
   return (

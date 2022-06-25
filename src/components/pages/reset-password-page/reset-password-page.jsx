@@ -31,7 +31,7 @@ export function ResetPasswordPage() {
   }
 
   return (
-    <div className={styles.pageContainer}>
+    <div className={styles.pageContainer + ' mt-30'}>
       <form className={styles.form + " mb-20 inputs-480"} onSubmit={onResetPassword}>
         <p className={'text-center text text_type_main-medium'}>Восстановление пароля</p>
         <Input type={'password'} placeholder={'Введите новый пароль'} value={password} onChange={onPasswordChange}

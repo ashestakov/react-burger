@@ -27,7 +27,7 @@ export function LoginPage() {
     }));
   }, [dispatch, email, history, password]);
 
-  return (<div className={styles.pageContainer}>
+  return (<div className={styles.pageContainer + ' mt-30'}>
     <form className={styles.form + " mb-20 inputs-480"} onSubmit={onLogin}>
       <p className={'text-center text text_type_main-medium'}>Вход</p>
       <Input type={'email'} placeholder={'E-mail'} value={email} onChange={onEmailChange}/>

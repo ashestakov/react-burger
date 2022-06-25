@@ -30,7 +30,7 @@ export function RegistrationPage() {
     setPassword(e.target.value);
   }, []);
 
-  return (<div className={styles.pageContainer}>
+  return (<div className={styles.pageContainer + ' mt-30'}>
     <form className={styles.form + " mb-20 inputs-480"} onSubmit={onRegister}>
       <p className={'text-center text text_type_main-medium'}>Регистрация</p>
       <Input type={'text'} placeholder={'Имя'} value={name} onChange={onNameChange}/>

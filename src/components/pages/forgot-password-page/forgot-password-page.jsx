@@ -26,7 +26,7 @@ export function ForgotPasswordPage() {
     )
   }
 
-  return (<div className={styles.pageContainer}>
+  return (<div className={styles.pageContainer + ' mt-30'}>
     <form className={styles.form + " mb-20 inputs-480"} onSubmit={onRestore}>
       <p className={'text-center text text_type_main-medium'}>Восстановление пароля</p>
       <Input type={'email'} placeholder={'Укажите e-mail'} value={email} onChange={onEmailChange}/>
