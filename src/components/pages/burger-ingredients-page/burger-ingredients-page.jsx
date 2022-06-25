@@ -22,6 +22,7 @@ export function BurgerIngredientsPage({ingredients}) {
   const id = match.params.id;
   const selectedIngredient = ingredients.find(ingredient => ingredient._id === id);
   const placedOrder = useSelector(store => store.placedOrder.order);
+  const accessToken = useSelector(store => store.auth.accessToken);
 
   const setSelectedIngredient = useCallback((ingredient) => {
     history.push(`/ingredients/${ingredient._id}`);
@@ -45,7 +46,11 @@ export function BurgerIngredientsPage({ingredients}) {
   }, []);
 
   const onPlaceOrder = useCallback((order) => {
-    dispatch(placeOrder(order));
+    if (accessToken) {
+      dispatch(placeOrder(order));
+    } else {
+      history.push("/login");
+    }
   }, []);
 
   const onOrderModalClose = useCallback(() => {

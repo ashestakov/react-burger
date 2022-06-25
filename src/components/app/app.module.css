@@ -6,16 +6,3 @@
 .pageContainer > div {
     grid-column: 2;
 }
-
-.pageConstructor main {
-    display: grid;
-    grid-template-columns: 600px 40px 600px;
-}
-
-.pageConstructor section:first-child {
-    grid-column: 1;
-}
-
-.pageConstructor section:last-child {
-    grid-column: 3;
-}
