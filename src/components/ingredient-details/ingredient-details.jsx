@@ -1,6 +1,4 @@
-import Modal from "../modal/modal";
 import styles from "./ingredient-details.module.css";
-import PropTypes from "prop-types";
 import {ingredientWithNutritionFactsType} from "../../utils/types";
 
 const STATS = [
@@ -10,33 +8,28 @@ const STATS = [
   {title: 'Углеводы,  г', propertyName: 'carbohydrates'},
 ]
 
-function IngredientDetails({ingredient, onClose}) {
+function IngredientDetails({ingredient}) {
   return (
-    <Modal title={"Детали ингредиента"} onClose={onClose}>
-      <div className={"pt-4 pl-4 pr-4"}>
-        <div className={styles.ingredientDetails + " pl-15 pr-15"}>
-          <img src={ingredient.image_large} className={"mb-4"}/>
-          <p className={"mb-8 text text_type_main-medium"}>{ingredient.name}</p>
-          <ul className={styles.stats + " mb-5"}>
-            {
-              STATS.map(({title, propertyName}) => {
-                  return (<li key={propertyName} className={styles.stat}>
-                    <p className={"text text_type_main-default"}>{title}</p>
-                    <p className={"text text_type_digits-default"}>{ingredient[propertyName]}</p>
-                  </li>)
-                }
-              )
-            }
-          </ul>
-        </div>
-      </div>
-    </Modal>
+      <div className={styles.ingredientDetails + " pl-15 pr-15"}>
+        <img src={ingredient.image_large} className={"mb-4"}/>
+        <p className={"mb-8 text text_type_main-medium"}>{ingredient.name}</p>
+        <ul className={styles.stats + " mb-5"}>
+          {
+            STATS.map(({title, propertyName}) => {
+                return (<li key={propertyName} className={styles.stat}>
+                  <p className={"text text_type_main-default"}>{title}</p>
+                  <p className={"text text_type_digits-default"}>{ingredient[propertyName]}</p>
+                </li>)
+              }
+            )
+          }
+        </ul>
+    </div>
   )
 }
 
 IngredientDetails.propTypes = {
-  ingredient: ingredientWithNutritionFactsType.isRequired,
-  onClose: PropTypes.func.isRequired
+  ingredient: ingredientWithNutritionFactsType.isRequired
 }
 
 export default IngredientDetails;

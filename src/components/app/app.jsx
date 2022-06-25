@@ -26,7 +26,7 @@ function App() {
       <AppHeader/>
       <div className={styles.pageContainer}>
         <Switch>
-          <Route path="/" exact={true}>
+          <Route path={["/", "/ingredients/:id"]} exact={true}>
             <BurgerIngredientsPage ingredients={ingredients}/>
           </Route>
           <UnauthorizedUserRoute path={'/login'} component={LoginPage}/>
