@@ -13,10 +13,12 @@ import {PLACED_ORDER_RESET} from "../../../services/actions/placed-order";
 import {useHistory, useRouteMatch} from "react-router-dom";
 import Modal from "../../modal/modal";
 
-export function BurgerIngredientsPage({ingredients}) {
+export function BurgerIngredientsPage() {
   const dispatch = useDispatch();
   const history = useHistory();
   const match = useRouteMatch();
+
+  const ingredients = useSelector(store => store.ingredients.ingredients);
 
   const [isIngredientInModal, setIsIngredientInModal] = useState(false);
   const id = match.params.id;

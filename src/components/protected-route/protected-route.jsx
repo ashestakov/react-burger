@@ -2,6 +2,7 @@ import {Route, Redirect} from 'react-router-dom';
 import {useEffect, useState} from 'react';
 import {getAccessToken, loadUser} from "../../services/actions";
 import {useDispatch, useSelector} from "react-redux";
+import PropTypes from "prop-types";
 
 export function ProtectedRoute({children, ...rest}) {
   const auth = useSelector(store => store.auth);
@@ -21,7 +22,7 @@ export function ProtectedRoute({children, ...rest}) {
     return null;
   }
 
-  if (!auth.accessToken) {
+  if (!auth.user) {
     return <Redirect to={{pathname: '/login', state: {from: rest.path}}} />
   }
 

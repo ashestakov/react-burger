@@ -70,6 +70,7 @@ function BurgerConstructor({onPlaceOrder, onAddIngredient, onRemoveIngredient}) 
 
 BurgerConstructor.propTypes = {
   onPlaceOrder: PropTypes.func.isRequired,
+  onAddIngredient: PropTypes.func.isRequired,
   onRemoveIngredient: PropTypes.func.isRequired
 }
 

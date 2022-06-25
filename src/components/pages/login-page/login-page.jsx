@@ -8,7 +8,7 @@ import {useDispatch} from "react-redux";
 export function LoginPage() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const {from} = useLocation().state;
+  const from = useLocation().state?.from;
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
