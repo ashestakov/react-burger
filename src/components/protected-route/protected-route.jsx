@@ -1,6 +1,6 @@
 import {Route, Redirect} from 'react-router-dom';
 import {useEffect, useState} from 'react';
-import {loadUser} from "../../services/actions";
+import {getAccessToken, loadUser} from "../../services/actions";
 import {useDispatch, useSelector} from "react-redux";
 
 export function ProtectedRoute({children, ...rest}) {
@@ -9,7 +9,7 @@ export function ProtectedRoute({children, ...rest}) {
   const [isUserLoaded, setUserLoaded] = useState(false);
 
   const init = async () => {
-    await dispatch(loadUser(auth.accessToken));
+    await dispatch(loadUser());
     setUserLoaded(true);
   };
 

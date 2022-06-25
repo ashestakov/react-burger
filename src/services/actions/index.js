@@ -170,11 +170,12 @@ export function logout(refreshToken) {
   }
 }
 
-export function getAccessToken(refreshToken) {
-  return dispatch => {
+export function getAccessToken() {
+  return (dispatch, getState) => {
+    const {refreshToken} = getState().auth;
     dispatch({type: GET_ACCESS_TOKEN_REQUEST});
 
-    fetch(`${DOMAIN}/api/auth/token`, {
+    return fetch(`${DOMAIN}/api/auth/token`, {
       method: 'POST',
       body: JSON.stringify({token: refreshToken}),
       headers: {
@@ -189,9 +190,18 @@ export function getAccessToken(refreshToken) {
   }
 }
 
-export function loadUser(accessToken) {
-  return dispatch => {
+export function loadUser() {
+  return async (dispatch, getState) => {
+    let {accessToken, refreshToken} = getState().auth;
     dispatch({type: LOAD_USER_REQUEST});
+
+    if (!accessToken) {
+      if (!refreshToken) {
+        dispatch(initializeAuth());
+      }
+      await dispatch(getAccessToken());
+      accessToken = getState().auth.accessToken;
+    }
 
     return fetch(`${DOMAIN}/api/auth/user`, {
       headers: {
@@ -229,7 +239,5 @@ export function initializeAuth() {
   return dispatch => {
     const refreshToken = localStorage.getItem('refreshToken');
     dispatch({type: SET_REFRESH_TOKEN, refreshToken});
-
-    dispatch(getAccessToken(refreshToken));
   }
 }
