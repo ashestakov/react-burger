@@ -200,23 +200,34 @@ export function loadUser() {
       accessToken = getState().auth.accessToken;
     }
 
-    return fetch(`${DOMAIN}/api/auth/user`, {
+    let res = await fetch(`${DOMAIN}/api/auth/user`, {
       headers: {
         'authorization': accessToken
       }
-    }).then(checkResponse)
-      .then(({user}) => {
-          dispatch({type: LOAD_USER_SUCCESS, user})
+    })
+    if (res.status === 401 || res.status === 403) {
+      // если токен истек, попробуем получить новый
+      await dispatch(getAccessToken());
+      accessToken = getState().auth.accessToken;
+      res = await fetch(`${DOMAIN}/api/auth/user`, {
+        headers: {
+          'authorization': accessToken
         }
-      ).catch(error => dispatch({type: LOAD_USER_ERROR, error}))
+      })
+      if (res.error) {
+        return dispatch({type: LOAD_USER_ERROR, error: res.error});
+      }
+    }
+    const json = await res.json();
+    return dispatch({type: LOAD_USER_SUCCESS, user: json.user})
   }
 }
 
 export function patchUser(accessToken, user) {
-  return dispatch => {
+  return async (dispatch, getState) => {
     dispatch({type: PATCH_USER_REQUEST})
 
-    fetch(`${DOMAIN}/api/auth/user`, {
+    let res = await fetch(`${DOMAIN}/api/auth/user`, {
         method: 'PATCH',
         body: JSON.stringify(user),
         headers: {
@@ -224,11 +235,27 @@ export function patchUser(accessToken, user) {
           'content-type': 'application/json'
         }
       }
-    ).then(checkResponse)
-      .then(({user}) => {
-          dispatch({type: PATCH_USER_SUCCESS, user})
+    )
+
+    if (res.status === 401 || res.status === 403) {
+      // если токен истек, попробуем получить новый
+      await dispatch(getAccessToken());
+      accessToken = getState().auth.accessToken;
+      res = await fetch(`${DOMAIN}/api/auth/user`, {
+          method: 'PATCH',
+          body: JSON.stringify(user),
+          headers: {
+            'authorization': accessToken,
+            'content-type': 'application/json'
+          }
         }
-      ).catch(error => dispatch({type: PATCH_USER_ERROR, error}))
+      )
+      if (res.error) {
+        return dispatch({type: PATCH_USER_ERROR, error: res.error});
+      }
+    }
+    const json = await res.json();
+    return dispatch({type: PATCH_USER_SUCCESS, user: json.user})
   }
 }
 
