@@ -1,5 +1,6 @@
 import styles from "./ingredient-details.module.css";
-import {ingredientWithNutritionFactsType} from "../../utils/types";
+import {useSelector} from "react-redux";
+import {useRouteMatch} from "react-router-dom";
 
 const STATS = [
   {title: 'Калории,  ккал', propertyName: 'calories'},
@@ -8,7 +9,16 @@ const STATS = [
   {title: 'Углеводы,  г', propertyName: 'carbohydrates'},
 ]
 
-function IngredientDetails({ingredient}) {
+function IngredientDetails() {
+  const match = useRouteMatch();
+  const ingredients = useSelector(store => store.ingredients.ingredients);
+  const id = match.params.id;
+  const ingredient = ingredients.find(ingredient => ingredient._id === id);
+
+  if (!ingredient) {
+    return null;
+  }
+
   return (
       <div className={styles.ingredientDetails + " pl-15 pr-15"}>
         <img src={ingredient.image_large} className={"mb-4"}/>
@@ -26,10 +36,6 @@ function IngredientDetails({ingredient}) {
         </ul>
     </div>
   )
-}
-
-IngredientDetails.propTypes = {
-  ingredient: ingredientWithNutritionFactsType.isRequired
 }
 
 export default IngredientDetails;

@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch, useLocation} from 'react-router-dom';
 import {useDispatch} from "react-redux";
 import styles from './app.module.css';
 import AppHeader from "../app-header/app-header";
@@ -7,6 +7,7 @@ import {getIngredients} from "../../services/actions/ingredients";
 import {initializeAuth} from "../../services/actions/auth";
 import {
   BurgerIngredientsPage,
+  IngredientPageModalSwitch,
   ForgotPasswordPage,
   LoginPage,
   NotFoundPage,
@@ -33,7 +34,8 @@ function App() {
       <AppHeader/>
       <div className={styles.pageContainer}>
         <Switch>
-          <Route path={["/", "/ingredients/:id"]} exact={true} component={BurgerIngredientsPage} />
+          <Route path={"/"} exact={true} component={BurgerIngredientsPage} />
+          <Route path={"/ingredients/:id"} exact={true} component={IngredientPageModalSwitch} />
           <UnauthorizedUserRoute path={'/login'} exact={true} component={LoginPage}/>
           <UnauthorizedUserRoute path={'/register'} exact={true} component={RegistrationPage}/>
           <UnauthorizedUserRoute path={'/forgot-password'} exact={true} component={ForgotPasswordPage}/>
