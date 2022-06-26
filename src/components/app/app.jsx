@@ -3,7 +3,8 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import styles from './app.module.css';
 import AppHeader from "../app-header/app-header";
-import {getIngredients, initializeAuth} from "../../services/actions";
+import {getIngredients} from "../../services/actions/ingredients";
+import {initializeAuth} from "../../services/actions/auth";
 import {
   BurgerIngredientsPage,
   ForgotPasswordPage,

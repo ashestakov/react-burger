@@ -1,8 +1,7 @@
 import {Route, Redirect} from 'react-router-dom';
 import {useEffect, useState} from 'react';
-import {getAccessToken, loadUser} from "../../services/actions";
+import {loadUser} from "../../services/actions/auth";
 import {useDispatch, useSelector} from "react-redux";
-import PropTypes from "prop-types";
 
 export function ProtectedRoute({children, ...rest}) {
   const auth = useSelector(store => store.auth);

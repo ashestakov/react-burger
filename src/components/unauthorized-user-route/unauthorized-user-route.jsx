@@ -1,7 +1,7 @@
 import {Route, Redirect} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import {loadUser} from "../../services/actions";
+import {loadUser} from "../../services/actions/auth";
 
 export function UnauthorizedUserRoute({children, ...rest}) {
   const auth = useSelector(store => store.auth);

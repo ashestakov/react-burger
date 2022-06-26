@@ -3,7 +3,7 @@ import {useCallback, useState} from "react";
 import styles from "../login-page/login-page.module.css";
 import {Link} from "react-router-dom";
 
-import {register} from "../../../services/actions";
+import {register} from "../../../services/actions/auth";
 import {useDispatch} from "react-redux";
 
 export function RegistrationPage() {

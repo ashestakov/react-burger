@@ -8,7 +8,7 @@ import BurgerConstructor from "../../burger-constructor/burger-constructor";
 import React, {useCallback, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {ORDER_INGREDIENT_ADD, ORDER_INGREDIENT_REMOVE} from "../../../services/actions/order";
-import {placeOrder} from "../../../services/actions";
+import {placeOrder} from "../../../services/actions/order";
 import {PLACED_ORDER_RESET} from "../../../services/actions/placed-order";
 import {useHistory, useRouteMatch} from "react-router-dom";
 import Modal from "../../modal/modal";
