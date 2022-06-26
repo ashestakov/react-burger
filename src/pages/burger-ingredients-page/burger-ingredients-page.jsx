@@ -1,17 +1,17 @@
-import OrderDetails from "../../order-details/order-details";
-import IngredientDetails from "../../ingredient-details/ingredient-details";
+import OrderDetails from "../../components/order-details/order-details";
+import IngredientDetails from "../../components/ingredient-details/ingredient-details";
 import styles from "./burger-ingredients-page.module.css";
 import {DndProvider} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
-import BurgerIngredients from "../../burger-ingredients/burger-ingredients";
-import BurgerConstructor from "../../burger-constructor/burger-constructor";
+import BurgerIngredients from "../../components/burger-ingredients/burger-ingredients";
+import BurgerConstructor from "../../components/burger-constructor/burger-constructor";
 import React, {useCallback, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {ORDER_INGREDIENT_ADD, ORDER_INGREDIENT_REMOVE} from "../../../services/actions/order";
-import {placeOrder} from "../../../services/actions/order";
-import {PLACED_ORDER_RESET} from "../../../services/actions/placed-order";
+import {ORDER_INGREDIENT_ADD, ORDER_INGREDIENT_REMOVE} from "../../services/actions/order";
+import {placeOrder} from "../../services/actions/order";
+import {PLACED_ORDER_RESET} from "../../services/actions/placed-order";
 import {useHistory, useRouteMatch} from "react-router-dom";
-import Modal from "../../modal/modal";
+import Modal from "../../components/modal/modal";
 
 export function BurgerIngredientsPage() {
   const dispatch = useDispatch();

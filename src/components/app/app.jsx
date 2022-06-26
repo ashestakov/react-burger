@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import styles from './app.module.css';
 import AppHeader from "../app-header/app-header";
 import {getIngredients} from "../../services/actions/ingredients";
@@ -12,13 +12,12 @@ import {
   NotFoundPage,
   ProfilePage,
   RegistrationPage
-} from "../pages";
-import {ResetPasswordPage} from "../pages/reset-password-page/reset-password-page";
+} from "../../pages";
+import {ResetPasswordPage} from "../../pages/reset-password-page/reset-password-page";
 import {ProtectedRoute} from "../protected-route/protected-route";
 import {UnauthorizedUserRoute} from "../unauthorized-user-route/unauthorized-user-route";
 
 function App() {
-  const ingredients = useSelector(store => store.ingredients.ingredients);
   const dispatch = useDispatch();
 
   useEffect(() => {

@@ -1,8 +1,8 @@
 import styles from './profile-page.module.css'
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useCallback, useEffect, useMemo, useState} from "react";
-import ProfileAsideLink from "../../profile-aside-link/profile-aside-link";
-import {logout, patchUser} from "../../../services/actions/auth";
+import ProfileAsideLink from "../../components/profile-aside-link/profile-aside-link";
+import {logout, patchUser} from "../../services/actions/auth";
 import {useDispatch, useSelector} from "react-redux";
 import {Route, Switch} from 'react-router-dom';
 

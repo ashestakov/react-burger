@@ -1,7 +1,7 @@
 import styles from "../login-page/login-page.module.css";
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useCallback, useState} from "react";
-import {finalizePasswordReset} from "../../../services/actions/auth";
+import {finalizePasswordReset} from "../../services/actions/auth";
 import {useDispatch, useSelector} from "react-redux";
 import {Redirect} from "react-router-dom";
 
