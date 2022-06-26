@@ -23,9 +23,6 @@ function App() {
 
   useEffect(() => {
     dispatch(getIngredients());
-  }, []);
-
-  useEffect(() => {
     dispatch(initializeAuth())
   }, []);
 
