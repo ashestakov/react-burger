@@ -64,14 +64,17 @@ function BurgerConstructor({onPlaceOrder, onAddIngredient, onRemoveIngredient}) 
           }
         </li>
       </ul>
-      <div className={styles.total}>
+      {
+        order.bun &&
+        (<div className={styles.total}>
             <span className={"text text_type_digits-medium mr-10"}>
                 {total} <CurrencyIcon type={"primary"}/>
             </span>
-        <Button type="primary" size="large" onClick={onClickOrder}>
-          Оформить заказ
-        </Button>
-      </div>
+          <Button type="primary" size="large" onClick={onClickOrder}>
+            Оформить заказ
+          </Button>
+        </div>)
+      }
     </section>
   )
 }
