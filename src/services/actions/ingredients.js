@@ -14,7 +14,6 @@ export function getIngredients() {
       .then(checkResponse)
       .then(res => {
         dispatch({type: INGREDIENTS_SUCCESS, ingredients: res.data});
-        dispatch({type: ORDER_INGREDIENT_ADD, ingredient: res.data[0]});
       })
       .catch(error => dispatch({type: INGREDIENTS_ERROR, error}));
   }
