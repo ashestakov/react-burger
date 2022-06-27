@@ -29,3 +29,19 @@
     align-items: center;
     justify-content: end;
 }
+
+.bunPlaceholder {
+    width: 488px;
+    min-height: 48px;
+    color: #8080a6;
+    border: 2px solid #8080a6;
+    padding: 16px 24px;
+}
+
+.bunPlaceholder_top {
+    border-radius: var(--top-constructor-item-border-radius);
+}
+
+.bunPlaceholder_bottom {
+    border-radius: var(--bottom-constructor-item-border-radius);
+}

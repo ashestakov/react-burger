@@ -1,12 +1,8 @@
-.pageConstructor main {
-  display: grid;
-  grid-template-columns: 1fr 600px 40px 600px 1fr;
+.pageContainer {
+    display: grid;
+    grid-template-columns: 1fr calc(600px + 40px + 600px) 1fr;
 }
 
-.pageConstructor section:first-child {
-  grid-column: 2;
-}
-
-.pageConstructor section:last-child {
-  grid-column: 4;
+.pageContainer > div {
+    grid-column: 2;
 }
