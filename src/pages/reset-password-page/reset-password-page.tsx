@@ -6,6 +6,9 @@ import {Redirect} from "react-router-dom";
 import {RootState} from "../../services/reducers/root-reducer";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
+// Нужно, чтобы typescript не ругался, когда компонентам
+// из @ya.praktikum/react-developer-burger-ui-components передаются children
+
 declare module 'react' {
   interface FunctionComponent<P = {}> {
     (props: PropsWithChildren<P>, context?: any): ReactElement<any, any> | null;
