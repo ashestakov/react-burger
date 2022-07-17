@@ -1,5 +1,6 @@
 import {DOMAIN} from "../../utils/domain";
 import {checkResponse} from "../../utils/network";
+import {AppThunk} from "../../hooks";
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
@@ -35,12 +36,18 @@ export const PATCH_USER_ERROR = 'PATCH_USER_ERROR';
 
 export const SET_REFRESH_TOKEN = 'SET_REFRESH_TOKEN';
 
-function saveRefreshToken(refreshToken) {
+type GetAuth = () => { auth: { accessToken: string, refreshToken: string } };
+type User = {
+  email: string,
+  name: string
+}
+
+function saveRefreshToken(refreshToken: string) {
   localStorage.setItem('refreshToken', refreshToken);
 }
 
-export function getAccessToken() {
-  return (dispatch, getState) => {
+export const getAccessToken = (): AppThunk => {
+  return (dispatch, getState: GetAuth) => {
     const {refreshToken} = getState().auth;
     dispatch({type: GET_ACCESS_TOKEN_REQUEST});
 
@@ -59,8 +66,8 @@ export function getAccessToken() {
   }
 }
 
-export function loadUser() {
-  return async (dispatch, getState) => {
+export const loadUser = (): AppThunk => {
+  return async (dispatch, getState: GetAuth) => {
     let {accessToken, refreshToken} = getState().auth;
     dispatch({type: LOAD_USER_REQUEST});
 
@@ -86,17 +93,18 @@ export function loadUser() {
           'authorization': accessToken
         }
       })
-      if (res.error) {
-        return dispatch({type: LOAD_USER_ERROR, error: res.error});
-      }
+
+      return dispatch({type: LOAD_USER_ERROR, error: res.body});
     }
     const json = await res.json();
     return dispatch({type: LOAD_USER_SUCCESS, user: json.user})
   }
 }
 
-export function patchUser(accessToken, user) {
-  return async (dispatch, getState) => {
+export type CredentialsDiff = {name?: string, email?: string, password?: string};
+
+export const patchUser = (accessToken: string, user: CredentialsDiff): AppThunk => {
+  return async (dispatch, getState: GetAuth) => {
     dispatch({type: PATCH_USER_REQUEST})
 
     let res = await fetch(`${DOMAIN}/api/auth/user`, {
@@ -122,17 +130,15 @@ export function patchUser(accessToken, user) {
           }
         }
       )
-      if (res.error) {
-        return dispatch({type: PATCH_USER_ERROR, error: res.error});
-      }
+      return dispatch({type: PATCH_USER_ERROR, error: res.body});
     }
     const json = await res.json();
     return dispatch({type: PATCH_USER_SUCCESS, user: json.user})
   }
 }
 
-export function login(email, password) {
-  return dispatch => {
+export const login = (email: string, password: string): AppThunk => {
+  return (dispatch) => {
     dispatch({type: LOGIN_REQUEST});
 
     return fetch(`${DOMAIN}/api/auth/login`, {
@@ -150,8 +156,8 @@ export function login(email, password) {
   }
 }
 
-export function register(name, email, password) {
-  return dispatch => {
+export const register = (name: string, email: string, password: string):AppThunk => {
+  return (dispatch) => {
     dispatch({type: REGISTER_REQUEST});
 
     fetch(`${DOMAIN}/api/auth/register`, {
@@ -169,8 +175,8 @@ export function register(name, email, password) {
   }
 }
 
-export function initiatePasswordReset(email) {
-  return dispatch => {
+export const initiatePasswordReset = (email: string): AppThunk => {
+  return (dispatch) => {
     dispatch({type: INITIATE_PASSWORD_RESET_REQUEST});
 
     fetch(`${DOMAIN}/api/password-reset`, {
@@ -187,8 +193,8 @@ export function initiatePasswordReset(email) {
   }
 }
 
-export function finalizePasswordReset(password, token) {
-  return dispatch => {
+export const finalizePasswordReset = (password: string, token: string):AppThunk => {
+  return (dispatch) => {
     dispatch({type: FINALIZE_PASSWORD_RESET_REQUEST});
 
     fetch(`${DOMAIN}/api/password-reset/reset`, {
@@ -205,8 +211,8 @@ export function finalizePasswordReset(password, token) {
   }
 }
 
-export function logout(refreshToken) {
-  return dispatch => {
+export const logout = (refreshToken: string): AppThunk => {
+  return (dispatch) => {
     dispatch({type: LOGOUT_REQUEST});
 
     fetch(`${DOMAIN}/api/auth/logout`, {
@@ -223,8 +229,8 @@ export function logout(refreshToken) {
   }
 }
 
-export function initializeAuth() {
-  return dispatch => {
+export const initializeAuth = ():AppThunk => {
+  return (dispatch) => {
     const refreshToken = localStorage.getItem('refreshToken');
     dispatch({type: SET_REFRESH_TOKEN, refreshToken});
   }

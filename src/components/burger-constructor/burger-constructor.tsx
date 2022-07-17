@@ -1,13 +1,21 @@
 import styles from './burger-constructor.module.css'
-import {ConstructorElement, CurrencyIcon, Button, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components'
-import PropTypes from "prop-types";
+import {ConstructorElement, CurrencyIcon, Button} from '@ya.praktikum/react-developer-burger-ui-components'
 import {useDrop} from "react-dnd";
 import {useCallback} from "react";
-import {useSelector} from "react-redux";
 import DraggableConstructorElement from "../draggable-constructor-element/draggable-constructor-element";
+import {useAppSelector} from "../../hooks";
+import {Order} from "../../services/actions/order";
+import React from "react";
 
-function BurgerConstructor({onPlaceOrder, onAddIngredient, onRemoveIngredient}) {
-  const order = useSelector(store => store.order);
+function BurgerConstructor(
+  {onPlaceOrder, onAddIngredient, onRemoveIngredient}:
+    {
+      onPlaceOrder: (order: Order) => void,
+      onAddIngredient: (id: string) => void,
+      onRemoveIngredient: (index: number) => void
+    }
+) {
+  const order = useAppSelector(store => store.order);
   const total = [order.bun, ...order.mainsAndSauces, order.bun].filter(item => item)
     .reduce((acc, cur) => acc + cur.price, 0);
 
@@ -15,14 +23,14 @@ function BurgerConstructor({onPlaceOrder, onAddIngredient, onRemoveIngredient}) 
     onPlaceOrder(order);
   }
 
-  const onDropHandler = useCallback(({id}) => {
+  const onDropHandler = useCallback(({id}: {id: string}) => {
     onAddIngredient(id);
   }, [])
 
   const [, dropTargetRef] = useDrop({
     accept: "ingredient",
-    drop(id) {
-      onDropHandler(id);
+    drop(dragObject) {
+      onDropHandler(dragObject as {id: string});
     },
   });
 
@@ -77,12 +85,6 @@ function BurgerConstructor({onPlaceOrder, onAddIngredient, onRemoveIngredient}) 
       }
     </section>
   )
-}
-
-BurgerConstructor.propTypes = {
-  onPlaceOrder: PropTypes.func.isRequired,
-  onAddIngredient: PropTypes.func.isRequired,
-  onRemoveIngredient: PropTypes.func.isRequired
 }
 
 export default BurgerConstructor;

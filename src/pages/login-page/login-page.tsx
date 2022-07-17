@@ -1,27 +1,37 @@
 import {Button, Input} from '@ya.praktikum/react-developer-burger-ui-components'
-import {useCallback, useState} from "react";
+import {SyntheticEvent, useCallback, useState} from "react";
 import styles from './login-page.module.css';
 import {Link, useHistory, useLocation} from "react-router-dom";
 import {login} from "../../services/actions/auth";
-import {useDispatch} from "react-redux";
+import {useAppDispatch} from "../../hooks";
+
+interface LocationState {
+  from: {
+    pathname: string;
+  };
+}
 
 export function LoginPage() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const history = useHistory();
-  const from = useLocation().state?.from;
+  const from = useLocation<LocationState>().state?.from;
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const onEmailChange = useCallback((e) => {
-    setEmail(e.target.value);
+  const onEmailChange = useCallback((e: SyntheticEvent) => {
+    if (e.target instanceof HTMLInputElement) {
+      setEmail(e.target.value);
+    }
   }, []);
 
-  const onPasswordChange = useCallback((e) => {
-    setPassword(e.target.value);
+  const onPasswordChange = useCallback((e: SyntheticEvent) => {
+    if (e.target instanceof HTMLInputElement) {
+      setPassword(e.target.value);
+    }
   }, []);
 
-  const onLogin = useCallback(async (e) => {
+  const onLogin = useCallback(async (e: SyntheticEvent) => {
     e.preventDefault();
     await dispatch(login(email, password))
     history.push(from || '/')

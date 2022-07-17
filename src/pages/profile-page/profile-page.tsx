@@ -1,19 +1,19 @@
 import styles from './profile-page.module.css'
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import {useCallback, useEffect, useMemo, useState} from "react";
+import {SyntheticEvent, useCallback, useEffect, useMemo, useState} from "react";
 import ProfileAsideLink from "../../components/profile-aside-link/profile-aside-link";
-import {logout, patchUser} from "../../services/actions/auth";
-import {useDispatch, useSelector} from "react-redux";
+import {CredentialsDiff, logout, patchUser} from "../../services/actions/auth";
 import {Route, Switch} from 'react-router-dom';
+import {useAppDispatch, useAppSelector} from "../../hooks";
 
 export function ProfilePage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const dispatch = useDispatch();
-  const user = useSelector(store => store.auth.user);
-  const accessToken = useSelector(store => store.auth.accessToken);
-  const refreshToken = useSelector(store => store.auth.refreshToken);
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(store => store.auth.user);
+  const accessToken = useAppSelector(store => store.auth.accessToken);
+  const refreshToken = useAppSelector(store => store.auth.refreshToken);
 
   useEffect(() => {
     if (user) {
@@ -22,19 +22,25 @@ export function ProfilePage() {
     }
   }, [user]);
 
-  const onNameChange = useCallback((e) => {
-    setName(e.target.value);
+  const onNameChange = useCallback((e: SyntheticEvent) => {
+    if (e.target instanceof HTMLInputElement) {
+      setName(e.target.value);
+    }
   }, [setName]);
 
-  const onEmailChange = useCallback((e) => {
-    setEmail(e.target.value);
+  const onEmailChange = useCallback((e: SyntheticEvent) => {
+    if (e.target instanceof HTMLInputElement) {
+      setEmail(e.target.value);
+    }
   }, [setEmail]);
 
-  const onPasswordChange = useCallback((e) => {
-    setPassword(e.target.value);
+  const onPasswordChange = useCallback((e: SyntheticEvent) => {
+    if (e.target instanceof HTMLInputElement) {
+      setPassword(e.target.value);
+    }
   }, [setPassword]);
 
-  const onClickLogout = useCallback((e) => {
+  const onClickLogout = useCallback((e: SyntheticEvent) => {
     e.preventDefault();
     dispatch(logout(refreshToken));
   }, [refreshToken]);
@@ -43,7 +49,7 @@ export function ProfilePage() {
     if (!user) {
       return {};
     }
-    let result = {};
+    let result:CredentialsDiff  = {};
 
     if (name !== user.name) {
       result.name = name;
@@ -58,12 +64,12 @@ export function ProfilePage() {
     return result;
   }, [user, name, email, password]);
 
-  const onSave = useCallback((e) => {
+  const onSave = useCallback((e: SyntheticEvent) => {
     e.preventDefault();
     dispatch(patchUser(accessToken, diff));
   }, [dispatch, accessToken, diff]);
 
-  const onCancelClick = useCallback((e) => {
+  const onCancelClick = useCallback((e: SyntheticEvent) => {
     e.preventDefault();
     setName(user.name);
     setEmail(user.email);

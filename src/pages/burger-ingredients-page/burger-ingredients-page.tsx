@@ -4,41 +4,42 @@ import {DndProvider} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
 import BurgerIngredients from "../../components/burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../../components/burger-constructor/burger-constructor";
-import React, {useCallback, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {ORDER_INGREDIENT_ADD, ORDER_INGREDIENT_REMOVE} from "../../services/actions/order";
+import React, {useCallback} from "react";
+import {Order, ORDER_INGREDIENT_ADD, ORDER_INGREDIENT_REMOVE} from "../../services/actions/order";
 import {placeOrder} from "../../services/actions/order";
 import {PLACED_ORDER_RESET} from "../../services/actions/placed-order";
 import {useHistory, useLocation, useRouteMatch} from "react-router-dom";
 import Modal from "../../components/modal/modal";
+import {Ingredient} from "../../services/reducers/ingredients";
+import {useAppDispatch, useAppSelector} from "../../hooks";
 
 export function BurgerIngredientsPage() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const history = useHistory();
   const location = useLocation();
 
-  const ingredients = useSelector(store => store.ingredients.ingredients);
+  const ingredients = useAppSelector((store) => store.ingredients.ingredients);
 
-  const placedOrder = useSelector(store => store.placedOrder.order);
-  const accessToken = useSelector(store => store.auth.accessToken);
+  const placedOrder = useAppSelector((store) => store.placedOrder.order);
+  const accessToken = useAppSelector((store) => store.auth.accessToken);
 
   const resetPlacedOrder = useCallback(() => {
     dispatch({type: PLACED_ORDER_RESET});
   }, []);
 
-  const onIngredientInfo = useCallback((ingredient) => {
+  const onIngredientInfo = useCallback((ingredient: Ingredient) => {
     history.push(`/ingredients/${ingredient._id}`, {background: location});
   }, []);
 
-  const addIngredient = useCallback((id) => {
+  const addIngredient = useCallback((id: string) => {
     dispatch({type: ORDER_INGREDIENT_ADD, ingredient: ingredients.find(i => i._id === id)});
   }, [ingredients]);
 
-  const removeIngredient = useCallback((index) => {
+  const removeIngredient = useCallback((index: number) => {
     dispatch({type: ORDER_INGREDIENT_REMOVE, index});
   }, []);
 
-  const onPlaceOrder = useCallback((order) => {
+  const onPlaceOrder = useCallback((order: Order) => {
     if (accessToken) {
       dispatch(placeOrder(order));
     } else {

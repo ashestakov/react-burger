@@ -1,12 +1,11 @@
 import styles from "./profile-aside-link.module.css";
 import {Link, useLocation} from "react-router-dom";
-import {useCallback} from "react";
-import PropTypes from "prop-types";
+import {SyntheticEvent, useCallback} from "react";
 
-function ProfileAsideLink({text, to, onClick}) {
+function ProfileAsideLink({text, to, onClick}: {text: string, to: string, onClick?: (e: SyntheticEvent) => void}) {
   const location = useLocation();
 
-  const isLinkWithPathActive = useCallback((path) => {
+  const isLinkWithPathActive = useCallback((path: string) => {
     return path === location.pathname;
   }, [location]);
 
@@ -16,12 +15,6 @@ function ProfileAsideLink({text, to, onClick}) {
       {text}
     </Link>
   )
-}
-
-ProfileAsideLink.propTypes = {
-  text: PropTypes.string.isRequired,
-  to: PropTypes.string.isRequired,
-  onClick: PropTypes.func
 }
 
 export default ProfileAsideLink;

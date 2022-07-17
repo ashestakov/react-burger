@@ -1,13 +1,13 @@
 import {DOMAIN} from "../../utils/domain";
 import {checkResponse} from "../../utils/network";
-import {ORDER_INGREDIENT_ADD} from "./order";
+import {AppDispatch} from "../../hooks";
 
 export const INGREDIENTS_REQUEST = 'INGREDIENTS_REQUEST';
 export const INGREDIENTS_SUCCESS = 'INGREDIENTS_SUCCESS';
 export const INGREDIENTS_ERROR = 'INGREDIENTS_ERROR';
 
 export function getIngredients() {
-  return dispatch => {
+  return (dispatch: AppDispatch) => {
     dispatch({type: INGREDIENTS_REQUEST});
 
     fetch(`${DOMAIN}/api/ingredients`)

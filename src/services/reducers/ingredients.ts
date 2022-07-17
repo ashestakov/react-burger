@@ -6,7 +6,29 @@ const INITIAL_STATE = {
   requestFailed: false
 };
 
-export default function ingredients(state = INITIAL_STATE, action) {
+export type IngredientType = "bun" | "main" | "sauce";
+
+export type IngredientStatKey = "calories" | "proteins" | "fat" | "carbohydrates";
+
+export type Ingredient = {
+  _id: string,
+  type: IngredientType,
+  image: string,
+  image_large: string,
+  image_mobile: string,
+  name: string,
+  price: number
+} & {
+  [statKeyName in IngredientStatKey]: number
+}
+
+type IngredientsAction = {
+  type: string,
+  ingredients?: Ingredient[],
+  error?: any
+}
+
+export default function ingredients(state = INITIAL_STATE, action: IngredientsAction) {
   switch (action.type) {
     case INGREDIENTS_REQUEST:
       return {

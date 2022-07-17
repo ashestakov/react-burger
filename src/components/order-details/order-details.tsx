@@ -1,7 +1,7 @@
 import styles from "./order-details.module.css";
-import PropTypes from "prop-types";
+import {PlacedOrder} from "../../services/actions/order";
 
-function OrderDetails({order}) {
+function OrderDetails({order}: {order: PlacedOrder}) {
   return (
     <div className={styles.orderDetails}>
       <p className={styles.glow + " text text_type_digits-large mb-8"}>{order.number}</p>
@@ -16,10 +16,6 @@ function OrderDetails({order}) {
       </p>
     </div>
   )
-}
-
-OrderDetails.propTypes = {
-  order: PropTypes.shape({number: PropTypes.number}).isRequired
 }
 
 export default OrderDetails;

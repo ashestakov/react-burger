@@ -1,17 +1,22 @@
 import styles from "./ingredient-details.module.css";
-import {useSelector} from "react-redux";
 import {useRouteMatch} from "react-router-dom";
+import {useAppSelector} from "../../hooks";
+import {IngredientStatKey} from "../../services/reducers/ingredients";
 
-const STATS = [
+const STATS: Array<{title: string, propertyName: IngredientStatKey}> = [
   {title: 'Калории,  ккал', propertyName: 'calories'},
   {title: 'Белки, г', propertyName: 'proteins'},
   {title: 'Жиры,  г', propertyName: 'fat'},
   {title: 'Углеводы,  г', propertyName: 'carbohydrates'},
 ]
 
+type ParamsType = {
+  id: string
+}
+
 function IngredientDetails() {
-  const match = useRouteMatch();
-  const ingredients = useSelector(store => store.ingredients.ingredients);
+  const match = useRouteMatch<ParamsType>();
+  const ingredients = useAppSelector(store => store.ingredients.ingredients);
   const id = match.params.id;
   const ingredient = ingredients.find(ingredient => ingredient._id === id);
 

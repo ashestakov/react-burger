@@ -2,10 +2,11 @@ import styles from "../burger-ingredients/burger-ingredients.module.css";
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
 import {useDrag} from 'react-dnd';
-import PropTypes from "prop-types";
-import {ingredientType} from "../../utils/types";
+import {Ingredient} from "../../services/reducers/ingredients";
 
-function BurgerIngredient({ingredient, count, onClick}) {
+function BurgerIngredient(
+  {ingredient, count, onClick}: { ingredient: Ingredient, count: number, onClick: (ingredient: Ingredient) => void }
+) {
   const {_id, image, name, price} = ingredient;
 
   const [, dragRef] = useDrag({
@@ -28,12 +29,6 @@ function BurgerIngredient({ingredient, count, onClick}) {
       </p>
     </li>
   )
-}
-
-BurgerIngredient.propTypes = {
-  ingredient: ingredientType.isRequired,
-  count: PropTypes.number,
-  onClick: PropTypes.func.isRequired
 }
 
 export default BurgerIngredient;
