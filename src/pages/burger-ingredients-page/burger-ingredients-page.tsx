@@ -5,13 +5,14 @@ import {HTML5Backend} from "react-dnd-html5-backend";
 import BurgerIngredients from "../../components/burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../../components/burger-constructor/burger-constructor";
 import React, {useCallback} from "react";
-import {Order, ORDER_INGREDIENT_ADD, ORDER_INGREDIENT_REMOVE} from "../../services/actions/order";
+import {ORDER_INGREDIENT_ADD, ORDER_INGREDIENT_REMOVE} from "../../services/actions/order";
 import {placeOrder} from "../../services/actions/order";
 import {PLACED_ORDER_RESET} from "../../services/actions/placed-order";
 import {useHistory, useLocation, useRouteMatch} from "react-router-dom";
 import Modal from "../../components/modal/modal";
-import {Ingredient} from "../../services/reducers/ingredients";
 import {useAppDispatch, useAppSelector} from "../../hooks";
+import {Ingredient} from "../../types/ingredient";
+import {Order} from "../../types/order";
 
 export function BurgerIngredientsPage() {
   const dispatch = useAppDispatch();
@@ -41,7 +42,7 @@ export function BurgerIngredientsPage() {
 
   const onPlaceOrder = useCallback((order: Order) => {
     if (accessToken) {
-      dispatch(placeOrder(order));
+      dispatch(placeOrder(order, accessToken));
     } else {
       history.push("/login");
     }

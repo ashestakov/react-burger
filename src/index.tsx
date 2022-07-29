@@ -7,6 +7,7 @@ import {compose, legacy_createStore as createStore, applyMiddleware} from "redux
 import thunk from 'redux-thunk';
 import rootReducer from "./services/reducers/root-reducer";
 import {Provider} from "react-redux";
+import {socketMiddleware} from "./middleware/socketMiddleware";
 
 type GlobalWindow = Window & {
     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
@@ -25,7 +26,10 @@ function getCompose() {
 
 const composeEnhancers = getCompose();
 
-const enhancer = composeEnhancers(applyMiddleware(thunk));
+const enhancer = composeEnhancers(
+  applyMiddleware(thunk),
+  applyMiddleware(socketMiddleware())
+);
 
 const root = ReactDOM.createRoot(
     document.getElementById('root')!

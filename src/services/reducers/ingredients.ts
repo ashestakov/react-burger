@@ -1,26 +1,11 @@
 import {INGREDIENTS_REQUEST, INGREDIENTS_SUCCESS, INGREDIENTS_ERROR} from "../actions/ingredients";
+import {Ingredient} from "../../types/ingredient";
 
 const INITIAL_STATE = {
   ingredients: [],
   makingRequest: false,
   requestFailed: false
 };
-
-export type IngredientType = "bun" | "main" | "sauce";
-
-export type IngredientStatKey = "calories" | "proteins" | "fat" | "carbohydrates";
-
-export type Ingredient = {
-  _id: string,
-  type: IngredientType,
-  image: string,
-  image_large: string,
-  image_mobile: string,
-  name: string,
-  price: number
-} & {
-  [statKeyName in IngredientStatKey]: number
-}
 
 type IngredientsAction = {
   type: string,

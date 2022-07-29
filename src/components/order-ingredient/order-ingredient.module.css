@@ -1,0 +1,29 @@
+.feedOrderIngredient {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #1C1C21;
+    border-radius: 100px;
+    border: 2px solid #5B2DC9;
+    width: 64px;
+    height: 64px;
+    max-width: 64px;
+    position: relative;
+}
+
+.feedOrderIngredient img {
+    height: 56px;
+    width: 112px;
+}
+
+.plusQuantityBackground {
+    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    min-height: 100%;
+    position: absolute;
+    border-radius: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

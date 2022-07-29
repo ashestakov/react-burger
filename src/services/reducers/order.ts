@@ -1,5 +1,5 @@
 import {ORDER_INGREDIENT_ADD, ORDER_INGREDIENT_REMOVE, ORDER_RESET, ORDER_MOVE_INGREDIENT} from "../actions/order";
-import {Ingredient} from "./ingredients";
+import {Ingredient} from "../../types/ingredient";
 
 const ORDER_INITIAL_STATE = {bun: null, mainsAndSauces: []};
 

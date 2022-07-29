@@ -5,6 +5,7 @@ import ProfileAsideLink from "../../components/profile-aside-link/profile-aside-
 import {CredentialsDiff, logout, patchUser} from "../../services/actions/auth";
 import {Route, Switch} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from "../../hooks";
+import {OrderHistoryPage} from "../order-history-page/order-history-page";
 
 export function ProfilePage() {
   const [name, setName] = useState('');
@@ -112,7 +113,7 @@ export function ProfilePage() {
           </form>
         </Route>
         <Route path={'/profile/orders'} exact={true}>
-
+          <OrderHistoryPage />
         </Route>
       </Switch>
     </main>

@@ -4,8 +4,8 @@ import {useDrop} from "react-dnd";
 import {useCallback} from "react";
 import DraggableConstructorElement from "../draggable-constructor-element/draggable-constructor-element";
 import {useAppSelector} from "../../hooks";
-import {Order} from "../../services/actions/order";
 import React from "react";
+import {Order} from "../../types/order";
 
 function BurgerConstructor(
   {onPlaceOrder, onAddIngredient, onRemoveIngredient}:
