@@ -2,13 +2,13 @@ import styles from "./order.module.css";
 import {OrderStatus} from "../../types/order";
 
 const ORDER_STATUS_CLASSES = {
-  "cancelled": styles.cancelledOrder,
+  "created": styles.createdOrder,
   "pending": styles.inProgressOrder,
   "done": styles.doneOrder
 }
 
 const ORDER_STATUS_TRANSLATIONS = {
-  "cancelled": 'Отменен',
+  "created": 'Создан',
   "pending": 'Готовится',
   "done": 'Выполнен'
 }

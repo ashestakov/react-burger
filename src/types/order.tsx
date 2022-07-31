@@ -4,7 +4,7 @@ export type OrderIngredient = Ingredient & {
   readonly quantity: number,
 }
 
-export type OrderStatus = 'cancelled' | 'pending' | 'done';
+export type OrderStatus = 'created' | 'pending' | 'done';
 
 export type HistoryOrder = {
   readonly number: string;
