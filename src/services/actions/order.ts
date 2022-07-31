@@ -3,10 +3,15 @@ import {DOMAIN} from "../../utils/domain";
 import {checkResponse} from "../../utils/network";
 import {AppDispatch} from "../../hooks";
 import {Order} from "../../types/order";
+import {AnyAction} from "redux";
 export const ORDER_INGREDIENT_ADD = 'ORDER_INGREDIENT_ADD';
 export const ORDER_INGREDIENT_REMOVE = 'ORDER_INGREDIENT_REMOVE';
 export const ORDER_RESET = 'ORDER_RESET';
 export const ORDER_MOVE_INGREDIENT = 'ORDER_SWAP_INGREDIENTS';
+
+export type OrderAction = AnyAction & {
+  type: typeof ORDER_INGREDIENT_ADD | typeof ORDER_INGREDIENT_REMOVE | typeof ORDER_RESET | typeof ORDER_MOVE_INGREDIENT;
+}
 
 export function placeOrder(order: Order, accessToken: string) {
   return (dispatch: AppDispatch) => {
