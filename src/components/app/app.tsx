@@ -22,6 +22,7 @@ import {FeedPage} from "../../pages/feed-page/feed-page";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import {OrderInfo} from "../order-info/order-info";
 import {OrderHistoryPage} from "../../pages/order-history-page/order-history-page";
+import Modal from "../modal/modal";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -46,29 +47,11 @@ function App() {
               modalContent={<IngredientDetails />}
             />
           </Route>
-          <Route path={"/feed/"} exact={true} component={FeedPage} />
-          <Route path={"/feed/:id"} exact={true}>
-            <PageModalSwitch
-              foregroundPath={'/feed/:id'}
-              backgroundPath={'/feed'}
-              page={<FeedPage />}
-              modalContent={<OrderInfo />}
-              modalTitle={''}
-            />
-          </Route>
+          <Route path={["/feed/:id", "/feed/"]} component={FeedPage} />
           <UnauthorizedUserRoute path={'/login'} exact={true} component={LoginPage}/>
           <UnauthorizedUserRoute path={'/register'} exact={true} component={RegistrationPage}/>
           <UnauthorizedUserRoute path={'/forgot-password'} exact={true} component={ForgotPasswordPage}/>
           <UnauthorizedUserRoute path={'/reset-password'} exact={true} component={ResetPasswordPage}/>
-          <ProtectedRoute path={"/profile/orders/:id"} exact={true}>
-            <PageModalSwitch
-              foregroundPath={'/profile/orders/:id'}
-              backgroundPath={'/profile/orders/'}
-              page={<ProfilePage />}
-              modalContent={<OrderInfo />}
-              modalTitle={''}
-            />
-          </ProtectedRoute>
           <ProtectedRoute path={'/profile'} component={ProfilePage}/>
           <Route path="*" component={NotFoundPage} />
         </Switch>
