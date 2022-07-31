@@ -3,7 +3,10 @@ import {HistoryOrder} from "../../types/order";
 import {OrderCard} from "../../components/order-card/order-card";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {useEffect} from "react";
-import {WS_CONNECTION_START, WS_GET_MESSAGE} from "../../services/actions/websocket";
+import {
+  WS_CONNECTION_CLOSE,
+  WS_CONNECTION_START,
+} from "../../services/actions/websocket";
 import orderStyles from '../../utils/order/order.module.css';
 import {Link, useLocation} from "react-router-dom";
 
@@ -35,9 +38,10 @@ export function FeedPage() {
           payload: 'wss://norma.nomoreparties.space/orders/all'
         }
       );
-      setTimeout(() => {
-        dispatch({type: WS_GET_MESSAGE});
-      });
+
+      return () => {
+        dispatch({type: WS_CONNECTION_CLOSE});
+      }
     },
     [] // eslint-disable-line react-hooks/exhaustive-deps
   );
@@ -65,7 +69,7 @@ export function FeedPage() {
             <div className={styles.orderColumnsContainer}>
               {
                 chunk(orders.filter(order => order.status === 'done'), 10).map((chunk, index) => (
-                  (<ul>
+                  (<ul key={chunk[0].number}>
                       {chunk.slice(0, 10).map(order => {
                         return (
                           <li key={order.number} className={styles.readyOrder}>

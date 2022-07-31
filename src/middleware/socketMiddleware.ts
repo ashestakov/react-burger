@@ -5,6 +5,7 @@ import {RootState} from "../services/reducers/root-reducer";
 type WSActions = {
   wsInit: string;
   wsSendMessage: string;
+  wsClose: string;
   onOpen: string;
   onClose: string;
   onError: string;
@@ -18,7 +19,7 @@ export const socketMiddleware = (wsActions: WSActions): Middleware => {
     return next => (action: {type: typeof wsActions[keyof typeof wsActions], payload: any}) => {
       const {dispatch, getState} = store;
       const {type, payload} = action;
-      const {wsInit, wsSendMessage, onOpen, onClose, onError, onMessage} = wsActions;
+      const {wsInit, wsSendMessage, wsClose, onOpen, onClose, onError, onMessage} = wsActions;
 
       if (type === wsInit) {
         socket = new WebSocket(action.payload);
@@ -43,6 +44,10 @@ export const socketMiddleware = (wsActions: WSActions): Middleware => {
 
         if (type === wsSendMessage) {
           socket.send(JSON.stringify(payload));
+        }
+
+        if (type === wsClose) {
+          socket.close();
         }
       }
 

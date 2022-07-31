@@ -2,7 +2,7 @@ import {OrderCard} from "../../components/order-card/order-card";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {HistoryOrder} from "../../types/order";
 import {useEffect} from "react";
-import {WS_CONNECTION_START, WS_GET_MESSAGE} from "../../services/actions/websocket";
+import {WS_CONNECTION_CLOSE, WS_CONNECTION_START} from "../../services/actions/websocket";
 import {Link, useLocation} from "react-router-dom";
 
 export function OrderHistoryPage() {
@@ -19,9 +19,10 @@ export function OrderHistoryPage() {
           payload: `wss://norma.nomoreparties.space/orders?token=${accessToken.replace('Bearer ', '')}`
         }
       );
-      setTimeout(() => {
-        dispatch({type: WS_GET_MESSAGE});
-      });
+
+      return () => {
+        dispatch({type: WS_CONNECTION_CLOSE});
+      }
     },
     [] // eslint-disable-line react-hooks/exhaustive-deps
   );
