@@ -5,10 +5,14 @@ import {Route, Switch, useHistory, useLocation} from "react-router-dom";
 import {BurgerIngredientsPage} from "../burger-ingredients-page/burger-ingredients-page";
 import Modal from "../../components/modal/modal";
 
+type LocationState = {
+  background?: Location;
+}
+
 export function IngredientPageModalSwitch() {
   const history = useHistory();
-  const location = useLocation();
-  const background = location.state && location.state.background;
+  const location = useLocation<LocationState>();
+  const background = location.state.background;
 
   const onModalClose = useCallback(() => {
     history.push('/');
@@ -16,7 +20,7 @@ export function IngredientPageModalSwitch() {
 
   return (
     <>
-      <Switch location={background || location}>
+      <Switch location={location || background}>
         <Route path={"/"} exact={true} component={BurgerIngredientsPage}/>
         <Route path={"/ingredients/:id"} exact={true}>
           <div className={'mt-30 ' + styles.standaloneIngredientContainer}>

@@ -1,14 +1,25 @@
 import {PLACED_ORDER_ERROR, PLACED_ORDER_REQUEST, PLACED_ORDER_SUCCESS} from "./placed-order";
 import {DOMAIN} from "../../utils/domain";
 import {checkResponse} from "../../utils/network";
+import {AppDispatch} from "../../hooks";
+import {Ingredient} from "../reducers/ingredients";
 
 export const ORDER_INGREDIENT_ADD = 'ORDER_INGREDIENT_ADD';
 export const ORDER_INGREDIENT_REMOVE = 'ORDER_INGREDIENT_REMOVE';
 export const ORDER_RESET = 'ORDER_RESET';
 export const ORDER_MOVE_INGREDIENT = 'ORDER_SWAP_INGREDIENTS';
 
-export function placeOrder(order) {
-  return dispatch => {
+export type Order= {
+  bun: Ingredient,
+  mainsAndSauces: Ingredient[],
+}
+
+export type PlacedOrder = {
+  number: string
+}
+
+export function placeOrder(order: Order) {
+  return (dispatch: AppDispatch) => {
     dispatch({type: PLACED_ORDER_REQUEST});
 
     fetch(`${DOMAIN}/api/orders`, {

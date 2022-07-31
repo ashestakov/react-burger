@@ -8,15 +8,27 @@ import thunk from 'redux-thunk';
 import rootReducer from "./services/reducers/root-reducer";
 import {Provider} from "react-redux";
 
-const composeEnhancers =
-    typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-        ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-        : compose;
+type GlobalWindow = Window & {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+}
+
+function getCompose() {
+    if (window as GlobalWindow) {
+        const windowWithCompose = (window! as GlobalWindow);
+        if (windowWithCompose.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) {
+            return windowWithCompose.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
+        }
+        return compose;
+    }
+    return compose;
+}
+
+const composeEnhancers = getCompose();
 
 const enhancer = composeEnhancers(applyMiddleware(thunk));
 
 const root = ReactDOM.createRoot(
-    document.getElementById('root')
+    document.getElementById('root')!
 );
 
 const store = createStore(rootReducer, enhancer);

@@ -1,15 +1,11 @@
 import styles from './modal-overlay.module.css'
-import PropTypes from "prop-types";
+import {SyntheticEvent} from "react";
 
-function ModalOverlay({onClick}) {
+function ModalOverlay({onClick}: {onClick: (e: SyntheticEvent) => void}) {
   return (
     <div className={styles.modalOverlay} onClick={onClick}>
     </div>
   )
-}
-
-ModalOverlay.propTypes = {
-  onClick: PropTypes.func.isRequired
 }
 
 export default ModalOverlay;

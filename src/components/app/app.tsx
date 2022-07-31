@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import {BrowserRouter as Router, Route, Switch, useLocation} from 'react-router-dom';
-import {useDispatch} from "react-redux";
 import styles from './app.module.css';
 import AppHeader from "../app-header/app-header";
 import {getIngredients} from "../../services/actions/ingredients";
@@ -17,9 +16,10 @@ import {
 import {ResetPasswordPage} from "../../pages/reset-password-page/reset-password-page";
 import {ProtectedRoute} from "../protected-route/protected-route";
 import {UnauthorizedUserRoute} from "../unauthorized-user-route/unauthorized-user-route";
+import {useAppDispatch} from "../../hooks";
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(getIngredients());

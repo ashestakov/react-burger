@@ -1,21 +1,23 @@
 import styles from "./forgot-password-page.module.css";
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, Redirect} from "react-router-dom";
-import {useCallback, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {SyntheticEvent, useCallback, useState} from "react";
 import {initiatePasswordReset} from "../../services/actions/auth";
+import {useAppDispatch, useAppSelector} from "../../hooks";
 
 export function ForgotPasswordPage() {
   const [email, setEmail] = useState('');
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const passwordResetRequestSuccess = useSelector(store => store.auth.passwordResetRequestSuccess);
+  const passwordResetRequestSuccess = useAppSelector(store => store.auth.passwordResetRequestSuccess);
 
-  const onEmailChange = useCallback((e) => {
-    setEmail(e.target.value);
+  const onEmailChange = useCallback((e: SyntheticEvent) => {
+    if (e.target instanceof HTMLInputElement) {
+      setEmail(e.target.value);
+    }
   }, []);
 
-  const onRestore = useCallback((e) => {
+  const onRestore = useCallback((e: SyntheticEvent) => {
     e.preventDefault();
     dispatch(initiatePasswordReset(email));
   }, [email]);

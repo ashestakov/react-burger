@@ -1,23 +1,23 @@
 import styles from './burger-ingredients.module.css'
-import React, {useRef} from "react";
-import PropTypes from "prop-types";
-import {useSelector} from "react-redux";
+import React, {Ref, SyntheticEvent, useRef} from "react";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Ingredient, IngredientType} from "../../services/reducers/ingredients";
+import {useAppSelector} from "../../hooks";
 
-const TABS = [
+const TABS: Array<{ type: IngredientType, name: string }> = [
   {type: 'bun', name: 'Булки'},
   {type: 'sauce', name: 'Соусы'},
   {type: 'main', name: 'Начинки'}
 ]
 
-function BurgerIngredients({onIngredientInfo}) {
-  const ingredients = useSelector(store => store.ingredients.ingredients);
+function BurgerIngredients({onIngredientInfo}: { onIngredientInfo: (ingredient: Ingredient) => void }) {
+  const ingredients = useAppSelector(store => store.ingredients.ingredients);
   const [current, setCurrent] = React.useState('bun');
-  const order = useSelector(store => store.order);
+  const order = useAppSelector(store => store.order);
 
   const ingredientCounts = React.useMemo(() => {
-    const counts = {};
+    const counts: { [id: string]: number } = {};
     [order.bun, order.bun, ...order.mainsAndSauces].forEach(ingredient => {
       if (!ingredient) {
         return;
@@ -27,7 +27,7 @@ function BurgerIngredients({onIngredientInfo}) {
     return counts;
   }, [order]);
 
-  const refs = [useRef(), useRef(), useRef()];
+  const refs: Array<React.MutableRefObject<any>> = [useRef(), useRef(), useRef()];
 
   const lists = TABS.map(({type, name}, index) => {
     return {
@@ -38,13 +38,15 @@ function BurgerIngredients({onIngredientInfo}) {
     }
   })
 
-  const onScroll = (e) => {
+  const onScroll = (e: SyntheticEvent) => {
     const nearestTabIndex = [0, 1, 2].map((index) => {
+      const target = e.target as HTMLElement;
+      const ref = refs[index]!;
       return {
         index,
         distance: Math.abs(
-          e.target.getBoundingClientRect().top -
-          refs[index].current.getBoundingClientRect().top
+          target.getBoundingClientRect().top -
+          ref.current.getBoundingClientRect().top
         )
       };
     }).reduce((prev, current) => {
@@ -70,36 +72,32 @@ function BurgerIngredients({onIngredientInfo}) {
     </div>
     <div className={styles.ingredientsScrollContainer} onScroll={onScroll}>
       <ul className={styles.ingredients}>
-          {
-            lists.map(({name, type, ingredients, ref}) => {
-              return (
-                <li key={type}>
-                  <h2 className={"text_type_main-medium"} ref={ref}>
-                    {name}
-                  </h2>
-                  <ul className={"pl-4 pr-4 pb-10 " + styles.ingredientList}>
-                    {
-                      ingredients.map((ingredient, index) => {
-                          const _id = ingredient._id;
-                          return (
-                            <BurgerIngredient count={ingredientCounts[_id]} ingredient={ingredient}
-                                              onClick={onIngredientInfo} key={index}/>
-                          )
-                        }
-                      )
-                    }
-                  </ul>
-                </li>
-              )
-            })
-          }
+        {
+          lists.map(({name, type, ingredients, ref}) => {
+            return (
+              <li key={type}>
+                <h2 className={"text_type_main-medium"} ref={ref}>
+                  {name}
+                </h2>
+                <ul className={"pl-4 pr-4 pb-10 " + styles.ingredientList}>
+                  {
+                    ingredients.map((ingredient, index) => {
+                        const _id = ingredient._id;
+                        return (
+                          <BurgerIngredient count={ingredientCounts[_id]} ingredient={ingredient}
+                                            onClick={onIngredientInfo} key={index}/>
+                        )
+                      }
+                    )
+                  }
+                </ul>
+              </li>
+            )
+          })
+        }
       </ul>
     </div>
   </section>)
-}
-
-BurgerIngredients.propTypes = {
-  onIngredientInfo: PropTypes.func.isRequired
 }
 
 export default BurgerIngredients;

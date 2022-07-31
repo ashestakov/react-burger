@@ -1,27 +1,41 @@
 import styles from "../login-page/login-page.module.css";
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import {useCallback, useState} from "react";
+import {SyntheticEvent, useCallback, useState} from "react";
 import {finalizePasswordReset} from "../../services/actions/auth";
-import {useDispatch, useSelector} from "react-redux";
 import {Redirect} from "react-router-dom";
+import {RootState} from "../../services/reducers/root-reducer";
+import {useAppDispatch, useAppSelector} from "../../hooks";
+
+// Нужно, чтобы typescript не ругался, когда компонентам
+// из @ya.praktikum/react-developer-burger-ui-components передаются children
+
+declare module 'react' {
+  interface FunctionComponent<P = {}> {
+    (props: PropsWithChildren<P>, context?: any): ReactElement<any, any> | null;
+  }
+}
 
 export function ResetPasswordPage() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [password, setPassword] = useState('');
   const [token, setToken] = useState('');
 
-  const passwordResetRequestSuccess = useSelector(store => store.auth.passwordResetRequestSuccess);
+  const passwordResetRequestSuccess = useAppSelector((store: RootState) => store.auth.passwordResetRequestSuccess);
 
-  const onPasswordChange = useCallback((e) => {
-    setPassword(e.target.value);
+  const onPasswordChange = useCallback((e: SyntheticEvent) => {
+    if (e.target instanceof HTMLInputElement) {
+      setPassword(e.target.value);
+    }
   }, []);
 
-  const onTokenChange = useCallback((e) => {
-    setToken(e.target.value);
+  const onTokenChange = useCallback((e: SyntheticEvent) => {
+    if (e.target instanceof HTMLInputElement) {
+      setToken(e.target.value);
+    }
   }, []);
 
-  const onResetPassword = useCallback((e) => {
+  const onResetPassword = useCallback((e: SyntheticEvent) => {
     e.preventDefault();
     dispatch(finalizePasswordReset(password, token));
   }, [dispatch, password, token]);

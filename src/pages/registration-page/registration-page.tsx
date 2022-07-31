@@ -1,33 +1,39 @@
 import {Button, Input} from '@ya.praktikum/react-developer-burger-ui-components'
-import {useCallback, useState} from "react";
+import {SyntheticEvent, useCallback, useState} from "react";
 import styles from "../login-page/login-page.module.css";
 import {Link} from "react-router-dom";
 
 import {register} from "../../services/actions/auth";
-import {useDispatch} from "react-redux";
+import {useAppDispatch} from "../../hooks";
 
 export function RegistrationPage() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
 
-  const onEmailChange = useCallback((e) => {
-    setEmail(e.target.value);
+  const onEmailChange = useCallback((e: SyntheticEvent) => {
+    if (e.target instanceof HTMLInputElement) {
+      setEmail(e.target.value);
+    }
   }, []);
 
-  const onNameChange = useCallback((e) => {
-    setName(e.target.value);
+  const onNameChange = useCallback((e: SyntheticEvent) => {
+    if (e.target instanceof HTMLInputElement) {
+      setName(e.target.value);
+    }
   }, []);
 
-  const onRegister = useCallback((e) => {
+  const onRegister = useCallback((e: SyntheticEvent) => {
     e.preventDefault();
     dispatch(register(name, email, password));
   }, [dispatch, name, email, password]);
 
-  const onPasswordChange = useCallback((e) => {
-    setPassword(e.target.value);
+  const onPasswordChange = useCallback((e: SyntheticEvent) => {
+    if (e.target instanceof HTMLInputElement) {
+      setPassword(e.target.value);
+    }
   }, []);
 
   return (<div className={styles.pageContainer + ' mt-30'}>

@@ -3,9 +3,12 @@ import {useDrag, useDrop} from "react-dnd";
 import {useCallback} from "react";
 import {useDispatch} from "react-redux";
 import {ORDER_MOVE_INGREDIENT} from "../../services/actions/order";
-import PropTypes from "prop-types";
+import {Ingredient} from "../../services/reducers/ingredients";
 
-function DraggableConstructorElement({id, index, name, price, thumbnail, handleClose}) {
+function DraggableConstructorElement(
+  {id, index, name, price, thumbnail, handleClose}:
+    { id: string, index: number, name: string, price: number, thumbnail: string, handleClose: () => void }
+) {
   const [{opacity}, dragRef] = useDrag(() => ({
     type: "constructor-element",
     item: {id, index},
@@ -16,14 +19,14 @@ function DraggableConstructorElement({id, index, name, price, thumbnail, handleC
 
   const dispatch = useDispatch();
 
-  const onDropHandler = useCallback((ingredient) => {
+  const onDropHandler = useCallback((ingredient: { index: number }) => {
     dispatch({type: ORDER_MOVE_INGREDIENT, oldIndex: ingredient.index, newIndex: index});
   }, [index]);
 
   const [, dropTargetRef] = useDrop({
     accept: "constructor-element",
-    drop(id) {
-      onDropHandler(id);
+    drop(dragObject) {
+      onDropHandler(dragObject as {index: number});
     },
   });
 
@@ -37,15 +40,6 @@ function DraggableConstructorElement({id, index, name, price, thumbnail, handleC
       </li>
     </div>
   )
-}
-
-DraggableConstructorElement.propTypes = {
-  id: PropTypes.string.isRequired,
-  index: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  thumbnail: PropTypes.string.isRequired,
-  handleClose: PropTypes.func.isRequired
 }
 
 export default DraggableConstructorElement;
