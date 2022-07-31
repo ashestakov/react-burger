@@ -1,0 +1,11 @@
+.cancelledOrder {
+    color: #BB372A;
+}
+
+.inProgressOrder {
+    color: white;
+}
+
+.doneOrder {
+    color: #00CCCC;
+}

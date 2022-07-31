@@ -3,7 +3,6 @@ import {useDrag, useDrop} from "react-dnd";
 import {useCallback} from "react";
 import {useDispatch} from "react-redux";
 import {ORDER_MOVE_INGREDIENT} from "../../services/actions/order";
-import {Ingredient} from "../../services/reducers/ingredients";
 
 function DraggableConstructorElement(
   {id, index, name, price, thumbnail, handleClose}:

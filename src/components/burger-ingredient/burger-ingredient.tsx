@@ -2,7 +2,7 @@ import styles from "../burger-ingredients/burger-ingredients.module.css";
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
 import {useDrag} from 'react-dnd';
-import {Ingredient} from "../../services/reducers/ingredients";
+import {Ingredient} from "../../types/ingredient";
 
 function BurgerIngredient(
   {ingredient, count, onClick}: { ingredient: Ingredient, count: number, onClick: (ingredient: Ingredient) => void }

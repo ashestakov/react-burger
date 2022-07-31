@@ -1,6 +1,7 @@
 import {DOMAIN} from "../../utils/domain";
 import {checkResponse} from "../../utils/network";
-import {AppThunk} from "../../hooks";
+import {AppDispatch, AppThunk} from "../../hooks";
+import {AnyAction} from "redux";
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
@@ -37,17 +38,17 @@ export const PATCH_USER_ERROR = 'PATCH_USER_ERROR';
 export const SET_REFRESH_TOKEN = 'SET_REFRESH_TOKEN';
 
 type GetAuth = () => { auth: { accessToken: string, refreshToken: string } };
-type User = {
-  email: string,
-  name: string
-}
 
 function saveRefreshToken(refreshToken: string) {
   localStorage.setItem('refreshToken', refreshToken);
 }
 
+export type AuthAction = AnyAction & {
+  type: typeof LOGIN_REQUEST | typeof LOGIN_SUCCESS | typeof LOGIN_ERROR | typeof REGISTER_REQUEST | typeof REGISTER_SUCCESS | typeof REGISTER_ERROR | typeof INITIATE_PASSWORD_RESET_REQUEST | typeof INITIATE_PASSWORD_RESET_SUCCESS | typeof INITIATE_PASSWORD_RESET_ERROR | typeof FINALIZE_PASSWORD_RESET_REQUEST | typeof FINALIZE_PASSWORD_RESET_SUCCESS | typeof FINALIZE_PASSWORD_RESET_ERROR | typeof LOGOUT_REQUEST | typeof LOGOUT_ERROR | typeof LOGOUT_SUCCESS | typeof GET_ACCESS_TOKEN_REQUEST | typeof GET_ACCESS_TOKEN_SUCCESS | typeof GET_ACCESS_TOKEN_ERROR | typeof LOAD_USER_REQUEST | typeof LOAD_USER_SUCCESS | typeof LOAD_USER_ERROR | typeof PATCH_USER_REQUEST | typeof PATCH_USER_SUCCESS | typeof PATCH_USER_ERROR | typeof SET_REFRESH_TOKEN;
+}
+
 export const getAccessToken = (): AppThunk => {
-  return (dispatch, getState: GetAuth) => {
+  return (dispatch: AppDispatch, getState: GetAuth) => {
     const {refreshToken} = getState().auth;
     dispatch({type: GET_ACCESS_TOKEN_REQUEST});
 
@@ -67,7 +68,7 @@ export const getAccessToken = (): AppThunk => {
 }
 
 export const loadUser = (): AppThunk => {
-  return async (dispatch, getState: GetAuth) => {
+  return async (dispatch: AppDispatch, getState: GetAuth) => {
     let {accessToken, refreshToken} = getState().auth;
     dispatch({type: LOAD_USER_REQUEST});
 
@@ -104,7 +105,7 @@ export const loadUser = (): AppThunk => {
 export type CredentialsDiff = {name?: string, email?: string, password?: string};
 
 export const patchUser = (accessToken: string, user: CredentialsDiff): AppThunk => {
-  return async (dispatch, getState: GetAuth) => {
+  return async (dispatch: AppDispatch, getState: GetAuth) => {
     dispatch({type: PATCH_USER_REQUEST})
 
     let res = await fetch(`${DOMAIN}/api/auth/user`, {
@@ -138,7 +139,7 @@ export const patchUser = (accessToken: string, user: CredentialsDiff): AppThunk 
 }
 
 export const login = (email: string, password: string): AppThunk => {
-  return (dispatch) => {
+  return (dispatch: AppDispatch) => {
     dispatch({type: LOGIN_REQUEST});
 
     return fetch(`${DOMAIN}/api/auth/login`, {
@@ -157,7 +158,7 @@ export const login = (email: string, password: string): AppThunk => {
 }
 
 export const register = (name: string, email: string, password: string):AppThunk => {
-  return (dispatch) => {
+  return (dispatch: AppDispatch) => {
     dispatch({type: REGISTER_REQUEST});
 
     fetch(`${DOMAIN}/api/auth/register`, {
@@ -176,7 +177,7 @@ export const register = (name: string, email: string, password: string):AppThunk
 }
 
 export const initiatePasswordReset = (email: string): AppThunk => {
-  return (dispatch) => {
+  return (dispatch: AppDispatch) => {
     dispatch({type: INITIATE_PASSWORD_RESET_REQUEST});
 
     fetch(`${DOMAIN}/api/password-reset`, {
@@ -194,7 +195,7 @@ export const initiatePasswordReset = (email: string): AppThunk => {
 }
 
 export const finalizePasswordReset = (password: string, token: string):AppThunk => {
-  return (dispatch) => {
+  return (dispatch: AppDispatch) => {
     dispatch({type: FINALIZE_PASSWORD_RESET_REQUEST});
 
     fetch(`${DOMAIN}/api/password-reset/reset`, {
@@ -212,7 +213,7 @@ export const finalizePasswordReset = (password: string, token: string):AppThunk 
 }
 
 export const logout = (refreshToken: string): AppThunk => {
-  return (dispatch) => {
+  return (dispatch: AppDispatch) => {
     dispatch({type: LOGOUT_REQUEST});
 
     fetch(`${DOMAIN}/api/auth/logout`, {
@@ -230,7 +231,7 @@ export const logout = (refreshToken: string): AppThunk => {
 }
 
 export const initializeAuth = ():AppThunk => {
-  return (dispatch) => {
+  return (dispatch: AppDispatch) => {
     const refreshToken = localStorage.getItem('refreshToken');
     dispatch({type: SET_REFRESH_TOKEN, refreshToken});
   }

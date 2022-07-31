@@ -1,5 +1,5 @@
 import styles from "./order-details.module.css";
-import {PlacedOrder} from "../../services/actions/order";
+import {PlacedOrder} from "../../types/order";
 
 function OrderDetails({order}: {order: PlacedOrder}) {
   return (

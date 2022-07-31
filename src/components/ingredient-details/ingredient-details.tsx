@@ -1,7 +1,7 @@
 import styles from "./ingredient-details.module.css";
 import {useRouteMatch} from "react-router-dom";
 import {useAppSelector} from "../../hooks";
-import {IngredientStatKey} from "../../services/reducers/ingredients";
+import {IngredientStatKey} from "../../types/ingredient";
 
 const STATS: Array<{title: string, propertyName: IngredientStatKey}> = [
   {title: 'Калории,  ккал', propertyName: 'calories'},

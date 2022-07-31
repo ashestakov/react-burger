@@ -38,3 +38,8 @@ ul, li, p {
 .inputs-480 .input_size_default {
     width: 480px;
 }
+
+a {
+    color: white;
+    text-decoration: none;
+}

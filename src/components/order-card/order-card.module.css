@@ -1,0 +1,47 @@
+.orderListItem {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 24px;
+    background: #1C1C21;
+    border-radius: 40px;
+}
+
+.orderListItemHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.orderCreatedAt {
+    color: #8585AD;
+}
+
+.feedOrderIngredientsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+}
+
+.feedOrderIngredients {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.feedOrderIngredients > div {
+    margin-right: -16px;
+}
+
+.readyOrder {
+    color: #00CCCC;
+}
+
+.orderListPrice {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    gap: 9px;
+}

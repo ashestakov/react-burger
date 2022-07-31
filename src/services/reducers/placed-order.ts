@@ -1,5 +1,5 @@
 import {PLACED_ORDER_SUCCESS, PLACED_ORDER_RESET, PLACED_ORDER_ERROR} from "../actions/placed-order";
-import {Order} from "../actions/order";
+import {Order} from "../../types/order";
 
 const INITIAL_STATE = {
   order: null,

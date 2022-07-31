@@ -4,8 +4,8 @@ import {loadUser} from "../../services/actions/auth";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
 export function ProtectedRoute(
-  {children, path, component, ...rest}:
-    { children?: ReactNode, path: string, component: React.ComponentType }
+  {children, path, component, exact, ...rest}:
+    { children?: ReactNode, path: string, component?: React.ComponentType, exact?: boolean }
 ) {
   const auth = useAppSelector(store => store.auth);
   const dispatch = useAppDispatch();
@@ -29,7 +29,7 @@ export function ProtectedRoute(
   }
 
   return (
-    <Route path={path} component={component} {...rest}>
+    <Route path={path} component={component} exact={exact} {...rest}>
       {
         children
       }
