@@ -1,0 +1,10 @@
+.orderPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.orderPage main {
+    max-width: 640px;
+    margin-top: 112px;
+}

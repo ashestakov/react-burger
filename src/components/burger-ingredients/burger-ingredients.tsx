@@ -2,8 +2,8 @@ import styles from './burger-ingredients.module.css'
 import React, {Ref, SyntheticEvent, useRef} from "react";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Ingredient, IngredientType} from "../../services/reducers/ingredients";
 import {useAppSelector} from "../../hooks";
+import {Ingredient, IngredientType} from "../../types/ingredient";
 
 const TABS: Array<{ type: IngredientType, name: string }> = [
   {type: 'bun', name: 'Булки'},

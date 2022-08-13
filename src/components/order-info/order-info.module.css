@@ -1,0 +1,37 @@
+.orderInfo {
+    width: 640px;
+}
+
+.orderNumber {
+    text-align: center;
+}
+
+.orderIngredients {
+    max-height: 312px;
+    margin-right: -16px;
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--offset-base-size) * 4);
+    composes: scrollContainer from '../../common-styles/scroll-container.css';
+}
+
+.orderIngredientRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.orderIngredientName {
+    flex-grow: 1;
+}
+
+.orderCreatedAt {
+    color: #8585AD;
+    flex-grow: 1;
+}
+
+.orderTotalContainer {
+    display: flex;
+    align-items: center;
+}

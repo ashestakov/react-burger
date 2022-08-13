@@ -1,0 +1,31 @@
+.feedPage main {
+    display: grid;
+    grid-template-columns: 608px 60px 580px;
+}
+
+.feedPage section:first-child {
+    grid-column: 1;
+}
+
+.feedPage section:last-child {
+    grid-column: 3;
+}
+
+.orderDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+
+.orderTableau {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+}
+
+.orderColumnsContainer {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    max-width: 280px;
+}

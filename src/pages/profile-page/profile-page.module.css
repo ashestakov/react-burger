@@ -11,11 +11,12 @@
 
 .profileNavAside {
     width: 320px;
+    min-width: 320px;
 }
 
 .form {
     display: flex;
     flex-direction: column;
-    align-items: end;
+    align-items: flex-end;
     gap: calc(var(--offset-base-size) * 6);
 }

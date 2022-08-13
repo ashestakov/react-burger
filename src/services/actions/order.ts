@@ -2,23 +2,18 @@ import {PLACED_ORDER_ERROR, PLACED_ORDER_REQUEST, PLACED_ORDER_SUCCESS} from "./
 import {DOMAIN} from "../../utils/domain";
 import {checkResponse} from "../../utils/network";
 import {AppDispatch} from "../../hooks";
-import {Ingredient} from "../reducers/ingredients";
-
+import {Order} from "../../types/order";
+import {AnyAction} from "redux";
 export const ORDER_INGREDIENT_ADD = 'ORDER_INGREDIENT_ADD';
 export const ORDER_INGREDIENT_REMOVE = 'ORDER_INGREDIENT_REMOVE';
 export const ORDER_RESET = 'ORDER_RESET';
 export const ORDER_MOVE_INGREDIENT = 'ORDER_SWAP_INGREDIENTS';
 
-export type Order= {
-  bun: Ingredient,
-  mainsAndSauces: Ingredient[],
+export type OrderAction = AnyAction & {
+  type: typeof ORDER_INGREDIENT_ADD | typeof ORDER_INGREDIENT_REMOVE | typeof ORDER_RESET | typeof ORDER_MOVE_INGREDIENT;
 }
 
-export type PlacedOrder = {
-  number: string
-}
-
-export function placeOrder(order: Order) {
+export function placeOrder(order: Order, accessToken: string) {
   return (dispatch: AppDispatch) => {
     dispatch({type: PLACED_ORDER_REQUEST});
 
@@ -32,7 +27,8 @@ export function placeOrder(order: Order) {
           ].map(ingredient => ingredient._id)
         }),
         headers: {
-          'content-type': 'application/json'
+          'content-type': 'application/json',
+          'authorization': accessToken
         }
       }
     ).then(checkResponse)

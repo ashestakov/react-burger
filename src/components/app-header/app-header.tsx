@@ -12,7 +12,7 @@ export default function AppHeader() {
             <BurgerIcon type="primary"/>
             Конструктор
           </NavBarLink>
-          <NavBarLink to={'#'} exact={true}>
+          <NavBarLink to={'/feed'} exact={true}>
             <ListIcon type="primary"/>
             Лента заказов
           </NavBarLink>

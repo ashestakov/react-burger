@@ -3,8 +3,9 @@ import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components"
 import {SyntheticEvent, useCallback, useEffect, useMemo, useState} from "react";
 import ProfileAsideLink from "../../components/profile-aside-link/profile-aside-link";
 import {CredentialsDiff, logout, patchUser} from "../../services/actions/auth";
-import {Route, Switch} from 'react-router-dom';
+import {Route, Switch, useHistory} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from "../../hooks";
+import {OrderHistoryPage} from "../order-history-page/order-history-page";
 
 export function ProfilePage() {
   const [name, setName] = useState('');
@@ -111,8 +112,8 @@ export function ProfilePage() {
             }
           </form>
         </Route>
-        <Route path={'/profile/orders'} exact={true}>
-
+        <Route path={['/profile/orders', '/profile/orders/:id']} exact={true}>
+          <OrderHistoryPage />
         </Route>
       </Switch>
     </main>
