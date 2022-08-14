@@ -17,6 +17,8 @@ type TWSState = {
   wsConnected: boolean;
   orders: HistoryOrder[];
   error?: Event;
+  total?: number;
+  totalToday?: number;
 }
 
 const initialState: TWSState = {
