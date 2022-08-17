@@ -31,6 +31,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "cypress": "cypress open cache clear",
     "deploy-script": "npm run build && scp -r ./build/* web@84.201.178.188:/home/web/stellar-frontend"
   },
   "eslintConfig": {
