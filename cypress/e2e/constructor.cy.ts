@@ -4,6 +4,18 @@ describe('empty spec', () => {
     cy.get('[class^="burger-ingredients_ingredient_"]').as('ingredients')
     cy.get('[class^="burger-constructor_ingredientStack"]').as('stack')
 
+    cy.get('@ingredients').contains('Краторная булка').click()
+
+    cy.get('[class^="modal_modal__"]').as('modal')
+    cy.get('@modal').contains('Краторная булка N-200i')
+    cy.get('@modal').get('li:nth-child(1)').contains('420')
+    cy.get('@modal').get('li:nth-child(2)').contains('80')
+    cy.get('@modal').get('li:nth-child(3)').contains('24')
+    cy.get('@modal').get('li:nth-child(4)').contains('53')
+
+    cy.get('[class^="modal_modalHeader"] > svg').click()
+    cy.get('[class^="modal_modal__"]').should('not.exist')
+
     cy.get('@ingredients').contains('Краторная булка').trigger('dragstart')
     cy.get('@stack').trigger('drop')
 
@@ -37,6 +49,9 @@ describe('empty spec', () => {
     cy.wait(15000)
 
     cy.contains('идентификатор заказа')
+
+    cy.get('[class^="modal_modalHeader"] > svg').click()
+    cy.get('[class^="modal_modal__"]').should('not.exist')
 
     cy.get('@stack').get('[class^="burger-constructor_bunPlaceholder__"]').should('exist')
     cy.get('@stack').get('[class^="burger-constructor_fillingsScrollContainer"] li').should('have.length', 0)
