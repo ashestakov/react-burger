@@ -2,16 +2,18 @@ import reducer from './placed-order';
 import * as types from "../actions/placed-order";
 
 describe('placed order reducer', () => {
+  const initialState = {
+    order: null,
+    makingRequest: false,
+    requestFailed: false
+  }
+
   it('should return the initial state', () => {
-    expect(reducer(undefined, {})).toEqual({
-      order: null,
-      makingRequest: false,
-      requestFailed: false
-    });
+    expect(reducer(undefined, {})).toEqual(initialState);
   })
 
   it('should handle PLACED_ORDER_SUCCESS', () => {
-    expect(reducer({order: null, makingRequest: false, requestFailed: false}, {
+    expect(reducer(initialState, {
       type: types.PLACED_ORDER_SUCCESS,
       order: {
         id: 1,
@@ -23,6 +25,7 @@ describe('placed order reducer', () => {
         }]
       }
     })).toEqual({
+      ...initialState,
       order: {
         id: 1,
         name: 'the order',
@@ -31,23 +34,25 @@ describe('placed order reducer', () => {
           name: 'the sauce',
           type: 'sauce'
         }]
-      }, makingRequest: false, requestFailed: false
+      }
     })
   })
 
   it('should handle PLACED_ORDER_RESET', () => {
-    expect(reducer({order: null, makingRequest: false, requestFailed: false}, {
+    expect(reducer({
+      ...initialState,
+      order: 1
+    }, {
       type: types.PLACED_ORDER_RESET
-    })).toEqual({
-      order: null, makingRequest: false, requestFailed: false
-    })
+    })).toEqual(initialState)
   })
 
   it('should handle PLACED_ORDER_ERROR', () => {
-    expect(reducer({order: null, makingRequest: false, requestFailed: false}, {
+    expect(reducer(initialState, {
       type: types.PLACED_ORDER_ERROR
     })).toEqual({
-      order: null, makingRequest: false, requestFailed: true
+      ...initialState,
+      requestFailed: true
     })
   })
 })

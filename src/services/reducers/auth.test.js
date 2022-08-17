@@ -2,53 +2,35 @@ import {auth as reducer} from './auth';
 import * as types from "../actions/auth";
 
 describe('auth reducer', () => {
+  const initialState = {
+    requestInProgress: false,
+    passwordResetRequestSuccess: false,
+    requestError: null,
+    accessToken: null,
+    refreshToken: null,
+    user: null,
+  };
+
   it('should return the initial state', () => {
-    expect(reducer(undefined, {})).toEqual(
-      {
-        requestInProgress: false,
-        passwordResetRequestSuccess: false,
-        requestError: null,
-        accessToken: null,
-        refreshToken: null,
-        user: null
-      }
-    )
+    expect(reducer(undefined, {})).toEqual(initialState);
   })
 
   it('should handle LOGIN_REQUEST', () => {
     expect(
-      reducer({
-        requestInProgress: false,
-        passwordResetRequestSuccess: false,
-        requestError: null,
-        accessToken: null,
-        refreshToken: null,
-        user: null
-      }, {
+      reducer(initialState, {
         type: types.LOGIN_REQUEST
       })
     ).toEqual(
       {
+        ...initialState,
         requestInProgress: true,
-        passwordResetRequestSuccess: false,
-        requestError: null,
-        accessToken: null,
-        refreshToken: null,
-        user: null
       }
     )
   })
 
   it('should handle LOGIN_SUCCESS', () => {
     expect(
-      reducer({
-        requestInProgress: true,
-        passwordResetRequestSuccess: false,
-        requestError: null,
-        accessToken: null,
-        refreshToken: null,
-        user: null
-      }, {
+      reducer(initialState, {
         type: types.LOGIN_SUCCESS,
         accessToken: '09ba8f8f-f8f8-f8f8-f8f8-f8f8f8f8f8f8',
         refreshToken: '736ba90d-f8b8-4f6b-b8a4-e0b9b9f8d8f9',
@@ -59,9 +41,8 @@ describe('auth reducer', () => {
       })
     ).toEqual(
       {
+        ...initialState,
         requestInProgress: false,
-        passwordResetRequestSuccess: false,
-        requestError: null,
         accessToken: '09ba8f8f-f8f8-f8f8-f8f8-f8f8f8f8f8f8',
         refreshToken: '736ba90d-f8b8-4f6b-b8a4-e0b9b9f8d8f9',
         user: {
@@ -75,24 +56,17 @@ describe('auth reducer', () => {
   it('should handle LOGIN_ERROR', () => {
     expect(
       reducer({
-        requestInProgress: true,
-        passwordResetRequestSuccess: false,
-        requestError: null,
-        accessToken: null,
-        refreshToken: null,
-        user: null
+        ...initialState,
+        requestInProgress: true
       }, {
         type: types.LOGIN_ERROR,
         error: 'Invalid credentials'
       })
     ).toEqual(
       {
+        ...initialState,
         requestInProgress: false,
-        passwordResetRequestSuccess: false,
         requestError: 'Invalid credentials',
-        accessToken: null,
-        refreshToken: null,
-        user: null
       }
     )
   })
@@ -100,9 +74,7 @@ describe('auth reducer', () => {
   it('should handle LOGOUT_REQUEST', () => {
     expect(
       reducer({
-          requestInProgress: false,
-          passwordResetRequestSuccess: false,
-          requestError: null,
+          ...initialState,
           accessToken: '09ba8f8f-f8f8-f8f8-f8f8-f8f8f8f8f8f8',
           refreshToken: '736ba90d-f8b8-4f6b-b8a4-e0b9b9f8d8f9',
           user: {
@@ -116,9 +88,8 @@ describe('auth reducer', () => {
       )
     ).toEqual(
       {
+        ...initialState,
         requestInProgress: true,
-        passwordResetRequestSuccess: false,
-        requestError: null,
         accessToken: '09ba8f8f-f8f8-f8f8-f8f8-f8f8f8f8f8f8',
         refreshToken: '736ba90d-f8b8-4f6b-b8a4-e0b9b9f8d8f9',
         user: {
@@ -132,9 +103,7 @@ describe('auth reducer', () => {
   it('should handle LOGOUT_SUCCESS', () => {
     expect(
       reducer({
-          requestInProgress: true,
-          passwordResetRequestSuccess: false,
-          requestError: null,
+          ...initialState,
           accessToken: '09ba8f8f-f8f8-f8f8-f8f8-f8f8f8f8f8f8',
           refreshToken: '736ba90d-f8b8-4f6b-b8a4-e0b9b9f8d8f9',
           user: {
@@ -144,24 +113,13 @@ describe('auth reducer', () => {
         },
         {
           type: types.LOGOUT_SUCCESS
-        })).toEqual(
-      {
-        requestInProgress: false,
-        passwordResetRequestSuccess: false,
-        requestError: null,
-        accessToken: null,
-        refreshToken: null,
-        user: null
-      }
-    )
+        })).toEqual(initialState)
   })
 
   it('should handle LOGOUT_ERROR', () => {
     expect(
       reducer({
-          requestInProgress: true,
-          passwordResetRequestSuccess: false,
-          requestError: null,
+          ...initialState,
           accessToken: '09ba8f8f-f8f8-f8f8-f8f8-f8f8f8f8f8f8',
           refreshToken: '736ba90d-f8b8-4f6b-b8a4-e0b9b9f8d8f9',
           user: {
@@ -174,8 +132,8 @@ describe('auth reducer', () => {
           error: 'Something went wrong'
         })).toEqual(
       {
+        ...initialState,
         requestInProgress: false,
-        passwordResetRequestSuccess: false,
         requestError: 'Something went wrong',
         accessToken: '09ba8f8f-f8f8-f8f8-f8f8-f8f8f8f8f8f8',
         refreshToken: '736ba90d-f8b8-4f6b-b8a4-e0b9b9f8d8f9',
@@ -189,24 +147,13 @@ describe('auth reducer', () => {
 
   it('should handle REGISTER_REQUEST', () => {
     expect(
-      reducer({
-        requestInProgress: false,
-        passwordResetRequestSuccess: false,
-        requestError: null,
-        accessToken: null,
-        refreshToken: null,
-        user: null
-      }, {
+      reducer(initialState, {
         type: types.REGISTER_REQUEST
       })
     ).toEqual(
       {
+        ...initialState,
         requestInProgress: true,
-        passwordResetRequestSuccess: false,
-        requestError: null,
-        accessToken: null,
-        refreshToken: null,
-        user: null
       }
     )
   })
@@ -214,12 +161,8 @@ describe('auth reducer', () => {
   it('should handle REGISTER_SUCCESS', () => {
     expect(
       reducer({
-        requestInProgress: true,
-        passwordResetRequestSuccess: false,
-        requestError: null,
-        accessToken: null,
-        refreshToken: null,
-        user: null
+        ...initialState,
+        requestInProgress: true
       }, {
         type: types.REGISTER_SUCCESS,
         accessToken: '09ba8f8f-f8f8-f8f8-f8f8-f8f8f8f8f8f8',
@@ -230,9 +173,8 @@ describe('auth reducer', () => {
         },
       })).toEqual(
       {
+        ...initialState,
         requestInProgress: false,
-        passwordResetRequestSuccess: false,
-        requestError: null,
         accessToken: '09ba8f8f-f8f8-f8f8-f8f8-f8f8f8f8f8f8',
         refreshToken: '736ba90d-f8b8-4f6b-b8a4-e0b9b9f8d8f9',
         user: {
@@ -245,46 +187,27 @@ describe('auth reducer', () => {
   it('should handle REGISTER_ERROR', () => {
     expect(
       reducer({
-        requestInProgress: true,
-        passwordResetRequestSuccess: false,
-        requestError: null,
-        accessToken: null,
-        refreshToken: null,
-        user: null
+        ...initialState,
+        requestInProgress: true
       }, {
         type: types.REGISTER_ERROR,
         error: 'Invalid credentials'
       })).toEqual(
       {
-        requestInProgress: false,
-        passwordResetRequestSuccess: false,
+        ...initialState,
         requestError: 'Invalid credentials',
-        accessToken: null,
-        refreshToken: null,
-        user: null
       }
     )
   })
 
   it('should handle INITIATE_PASSWORD_RESET_REQUEST', () => {
     expect(
-      reducer({
-        requestInProgress: false,
-        passwordResetRequestSuccess: false,
-        requestError: null,
-        accessToken: null,
-        refreshToken: null,
-        user: null
-      }, {
+      reducer(initialState, {
         type: types.INITIATE_PASSWORD_RESET_REQUEST
       })).toEqual(
       {
+        ...initialState,
         requestInProgress: true,
-        passwordResetRequestSuccess: false,
-        requestError: null,
-        accessToken: null,
-        refreshToken: null,
-        user: null
       }
     )
   })
@@ -292,22 +215,14 @@ describe('auth reducer', () => {
   it('should handle INITIATE_PASSWORD_RESET_SUCCESS', () => {
     expect(
       reducer({
+        ...initialState,
         requestInProgress: true,
-        passwordResetRequestSuccess: false,
-        requestError: null,
-        accessToken: null,
-        refreshToken: null,
-        user: null
       }, {
         type: types.INITIATE_PASSWORD_RESET_SUCCESS
       })).toEqual(
       {
-        requestInProgress: false,
+        ...initialState,
         passwordResetRequestSuccess: true,
-        requestError: null,
-        accessToken: null,
-        refreshToken: null,
-        user: null
       }
     )
   })
@@ -315,46 +230,27 @@ describe('auth reducer', () => {
   it('should handle INITIATE_PASSWORD_RESET_ERROR', () => {
     expect(
       reducer({
+        ...initialState,
         requestInProgress: true,
-        passwordResetRequestSuccess: false,
-        requestError: null,
-        accessToken: null,
-        refreshToken: null,
-        user: null
       }, {
         type: types.INITIATE_PASSWORD_RESET_ERROR,
         error: 'Invalid credentials'
       })).toEqual(
       {
-        requestInProgress: false,
-        passwordResetRequestSuccess: false,
+        ...initialState,
         requestError: 'Invalid credentials',
-        accessToken: null,
-        refreshToken: null,
-        user: null
       }
     )
   })
 
   it('should handle FINALIZE_PASSWORD_RESET_REQUEST', () => {
     expect(
-      reducer({
-        requestInProgress: false,
-        passwordResetRequestSuccess: false,
-        requestError: null,
-        accessToken: null,
-        refreshToken: null,
-        user: null
-      }, {
+      reducer(initialState, {
         type: types.FINALIZE_PASSWORD_RESET_REQUEST
       })).toEqual(
       {
+        ...initialState,
         requestInProgress: true,
-        passwordResetRequestSuccess: false,
-        requestError: null,
-        accessToken: null,
-        refreshToken: null,
-        user: null
       }
     )
   })
@@ -362,69 +258,37 @@ describe('auth reducer', () => {
   it('should handle FINALIZE_PASSWORD_RESET_SUCCESS', () => {
     expect(
       reducer({
+        ...initialState,
         requestInProgress: true,
-        passwordResetRequestSuccess: false,
-        requestError: null,
-        accessToken: null,
-        refreshToken: null,
-        user: null
       }, {
         type: types.FINALIZE_PASSWORD_RESET_SUCCESS
-      })).toEqual(
-      {
-        requestInProgress: false,
-        passwordResetRequestSuccess: false,
-        requestError: null,
-        accessToken: null,
-        refreshToken: null,
-        user: null
-      }
-    )
+      })).toEqual(initialState)
   })
 
   it('should handle FINALIZE_PASSWORD_RESET_ERROR', () => {
     expect(
       reducer({
+        ...initialState,
         requestInProgress: true,
-        passwordResetRequestSuccess: false,
-        requestError: null,
-        accessToken: null,
-        refreshToken: null,
-        user: null
       }, {
         type: types.FINALIZE_PASSWORD_RESET_ERROR,
         error: 'Invalid credentials'
       })).toEqual(
       {
-        requestInProgress: false,
-        passwordResetRequestSuccess: false,
+        ...initialState,
         requestError: 'Invalid credentials',
-        accessToken: null,
-        refreshToken: null,
-        user: null
       }
     )
   })
 
   it('should handle GET_ACCESS_TOKEN_REQUEST', () => {
     expect(
-      reducer({
-        requestInProgress: false,
-        passwordResetRequestSuccess: false,
-        requestError: null,
-        accessToken: null,
-        refreshToken: null,
-        user: null
-      }, {
+      reducer(initialState, {
         type: types.GET_ACCESS_TOKEN_REQUEST
       })).toEqual(
       {
+        ...initialState,
         requestInProgress: true,
-        passwordResetRequestSuccess: false,
-        requestError: null,
-        accessToken: null,
-        refreshToken: null,
-        user: null
       }
     )
   })
@@ -432,70 +296,44 @@ describe('auth reducer', () => {
   it('should handle GET_ACCESS_TOKEN_SUCCESS', () => {
     expect(
       reducer({
+        ...initialState,
         requestInProgress: true,
-        passwordResetRequestSuccess: false,
-        requestError: null,
-        accessToken: null,
-        refreshToken: null,
-        user: null
       }, {
         type: types.GET_ACCESS_TOKEN_SUCCESS,
         accessToken: '09ba8f8f-f8f8-f8f8-f8f8-f8f8f8f8f8f8',
         refreshToken: '736ba90d-f8b8-4f6b-b8a4-e0b9b9f8d8f9',
       })).toEqual(
       {
-        requestInProgress: false,
-        passwordResetRequestSuccess: false,
-        requestError: null,
+        ...initialState,
         accessToken: '09ba8f8f-f8f8-f8f8-f8f8-f8f8f8f8f8f8',
         refreshToken: '736ba90d-f8b8-4f6b-b8a4-e0b9b9f8d8f9',
-        user: null
       })
   })
 
   it('should handle GET_ACCESS_TOKEN_ERROR', () => {
     expect(
       reducer({
+        ...initialState,
         requestInProgress: true,
-        passwordResetRequestSuccess: false,
-        requestError: null,
-        accessToken: null,
-        refreshToken: null,
-        user: null
       }, {
         type: types.GET_ACCESS_TOKEN_ERROR,
         error: 'Invalid credentials'
       })).toEqual(
       {
-        requestInProgress: false,
-        passwordResetRequestSuccess: false,
+        ...initialState,
         requestError: 'Invalid credentials',
-        accessToken: null,
-        refreshToken: null,
-        user: null
       }
     )
   })
 
   it('should handle LOAD_USER_REQUEST', () => {
     expect(
-      reducer({
-        requestInProgress: false,
-        passwordResetRequestSuccess: false,
-        requestError: null,
-        accessToken: null,
-        refreshToken: null,
-        user: null
-      }, {
+      reducer(initialState, {
         type: types.LOAD_USER_REQUEST
       })).toEqual(
       {
+        ...initialState,
         requestInProgress: true,
-        passwordResetRequestSuccess: false,
-        requestError: null,
-        accessToken: null,
-        refreshToken: null,
-        user: null
       }
     )
   })
@@ -503,12 +341,8 @@ describe('auth reducer', () => {
   it('should handle LOAD_USER_SUCCESS', () => {
     expect(
       reducer({
+        ...initialState,
         requestInProgress: true,
-        passwordResetRequestSuccess: false,
-        requestError: null,
-        accessToken: null,
-        refreshToken: null,
-        user: null
       }, {
         type: types.LOAD_USER_SUCCESS,
         user: {
@@ -517,11 +351,7 @@ describe('auth reducer', () => {
         },
       })).toEqual(
       {
-        requestInProgress: false,
-        passwordResetRequestSuccess: false,
-        requestError: null,
-        accessToken: null,
-        refreshToken: null,
+        ...initialState,
         user: {
           email: 'norma@stellar-burgers.com',
           name: 'Norma',
@@ -532,46 +362,27 @@ describe('auth reducer', () => {
   it('should handle LOAD_USER_ERROR', () => {
     expect(
       reducer({
+        ...initialState,
         requestInProgress: true,
-        passwordResetRequestSuccess: false,
-        requestError: null,
-        accessToken: null,
-        refreshToken: null,
-        user: null
       }, {
         type: types.LOAD_USER_ERROR,
         error: 'Invalid credentials'
       })).toEqual(
       {
-        requestInProgress: false,
-        passwordResetRequestSuccess: false,
+        ...initialState,
         requestError: 'Invalid credentials',
-        accessToken: null,
-        refreshToken: null,
-        user: null
       }
     )
   })
 
   it('should handle PATCH_USER_REQUEST', () => {
     expect(
-      reducer({
-        requestInProgress: false,
-        passwordResetRequestSuccess: false,
-        requestError: null,
-        accessToken: null,
-        refreshToken: null,
-        user: null
-      }, {
+      reducer(initialState, {
         type: types.PATCH_USER_REQUEST
       })).toEqual(
       {
+        ...initialState,
         requestInProgress: true,
-        passwordResetRequestSuccess: false,
-        requestError: null,
-        accessToken: null,
-        refreshToken: null,
-        user: null
       }
     )
   })
@@ -579,11 +390,8 @@ describe('auth reducer', () => {
   it('should handle PATCH_USER_SUCCESS', () => {
     expect(
       reducer({
+        ...initialState,
         requestInProgress: true,
-        passwordResetRequestSuccess: false,
-        requestError: null,
-        accessToken: null,
-        refreshToken: null,
         user: {
           email: 'norma@stellar-burgers.com',
           name: 'Norma',
@@ -596,11 +404,7 @@ describe('auth reducer', () => {
         },
       })).toEqual(
       {
-        requestInProgress: false,
-        passwordResetRequestSuccess: false,
-        requestError: null,
-        accessToken: null,
-        refreshToken: null,
+        ...initialState,
         user: {
           email: 'uncle@stellar-burgers.com',
           name: 'Uncle',
@@ -612,47 +416,28 @@ describe('auth reducer', () => {
   it('should handle PATCH_USER_ERROR', () => {
     expect(
       reducer({
+        ...initialState,
         requestInProgress: true,
-        passwordResetRequestSuccess: false,
-        requestError: null,
-        accessToken: null,
-        refreshToken: null,
-        user: null
       }, {
         type: types.PATCH_USER_ERROR,
         error: 'Invalid credentials'
       })).toEqual(
       {
-        requestInProgress: false,
-        passwordResetRequestSuccess: false,
+        ...initialState,
         requestError: 'Invalid credentials',
-        accessToken: null,
-        refreshToken: null,
-        user: null
       }
     )
   })
 
   it('should handle SET_REFRESH_TOKEN', () => {
     expect(
-      reducer({
-        requestInProgress: false,
-        passwordResetRequestSuccess: false,
-        requestError: null,
-        accessToken: null,
-        refreshToken: null,
-        user: null
-      }, {
+      reducer(initialState, {
         type: types.SET_REFRESH_TOKEN,
         refreshToken: '736ba90d-f8b8-4f6b-b8a4-e0b9b9f8d8f9',
       })).toEqual(
       {
-        requestInProgress: false,
-        passwordResetRequestSuccess: false,
-        requestError: null,
-        accessToken: null,
+        ...initialState,
         refreshToken: '736ba90d-f8b8-4f6b-b8a4-e0b9b9f8d8f9',
-        user: null
       }
     )
   })

@@ -2,33 +2,29 @@ import reducer from './ingredients';
 import * as types from "../actions/ingredients";
 
 describe('ingredients reducer', () => {
+  const initialState = {
+    ingredients: [],
+    makingRequest: false,
+    requestFailed: false
+  }
+
   it('should return the initial state', () => {
-    expect(reducer(undefined, {})).toEqual({
-      ingredients: [],
-      makingRequest: false,
-      requestFailed: false
-    });
+    expect(reducer(undefined, {})).toEqual(initialState);
   })
 
   it('should handle INGREDIENTS_REQUEST', () => {
-    expect(reducer({
-      ingredients: [],
-      makingRequest: false,
-      requestFailed: false
-    }, {
+    expect(reducer(initialState, {
       type: types.INGREDIENTS_REQUEST
     })).toEqual({
-      ingredients: [],
+      ...initialState,
       makingRequest: true,
-      requestFailed: false
     });
   });
 
   it('should handle INGREDIENTS_SUCCESS', () => {
     expect(reducer({
-      ingredients: [],
+      ...initialState,
       makingRequest: true,
-      requestFailed: false
     }, {
       type: types.INGREDIENTS_SUCCESS,
       ingredients: [{
@@ -36,25 +32,22 @@ describe('ingredients reducer', () => {
         name: 'test'
       }]
     })).toEqual({
+      ...initialState,
       ingredients: [{
         id: 1,
         name: 'test'
       }],
-      makingRequest: false,
-      requestFailed: false
     })
   });
 
   it('should handle INGREDIENTS_ERROR', () => {
     expect(reducer({
-      ingredients: [],
+      ...initialState,
       makingRequest: true,
-      requestFailed: false
     }, {
       type: types.INGREDIENTS_ERROR
     })).toEqual({
-      ingredients: [],
-      makingRequest: false,
+      ...initialState,
       requestFailed: true
     })
   })

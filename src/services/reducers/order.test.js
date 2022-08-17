@@ -2,21 +2,26 @@ import reducer from './order';
 import * as types from "../actions/order";
 
 describe('order reducer', () => {
+  const initialState = {bun: null, mainsAndSauces: []};
+
   it('should return the initial state', () => {
-    expect(reducer(undefined, {})).toEqual({bun: null, mainsAndSauces: []});
+    expect(reducer(undefined, {})).toEqual(initialState);
   })
 
   it('should handle ORDER_INGREDIENT_ADD', () => {
-    expect(reducer({bun: null, mainsAndSauces: []}, {
+    expect(reducer(initialState, {
       type: types.ORDER_INGREDIENT_ADD,
       ingredient: {
         id: 1,
         name: 'the sauce',
         type: 'sauce'
       }
-    })).toEqual({bun: null, mainsAndSauces: [{id: 1, name: 'the sauce', type: 'sauce'}]})
+    })).toEqual({
+      ...initialState,
+      mainsAndSauces: [{id: 1, name: 'the sauce', type: 'sauce'}]
+    })
 
-    expect(reducer({bun: null, mainsAndSauces: []}, {
+    expect(reducer(initialState, {
       type: types.ORDER_INGREDIENT_ADD,
       ingredient: {
         id: 1,
@@ -24,14 +29,15 @@ describe('order reducer', () => {
         type: 'bun'
       }
     })).toEqual({
+      ...initialState,
       bun: {
         id: 1,
         name: 'the bun',
         type: 'bun'
-      }, mainsAndSauces: []
+      }
     })
 
-    expect(reducer({bun: null, mainsAndSauces: []}, {
+    expect(reducer(initialState, {
       type: types.ORDER_INGREDIENT_ADD,
       ingredient: {
         id: 1,
@@ -39,7 +45,8 @@ describe('order reducer', () => {
         type: 'main'
       }
     })).toEqual({
-      bun: null, mainsAndSauces: [{
+      ...initialState,
+      mainsAndSauces: [{
         id: 1,
         name: 'the main',
         type: 'main'
